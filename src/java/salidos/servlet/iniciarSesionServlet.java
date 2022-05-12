@@ -5,25 +5,24 @@
 package salidos.servlet;
 
 import jakarta.ejb.EJB;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import salidos.dao.PersonaFacade;
-import salidos.entity.Persona;
+import salidos.dto.PersonaDTO;
+import salidos.service.PersonaService;
 
 /**
  *
  * @author gil
  */
-@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
-public class NewServlet extends HttpServlet {
+@WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
+public class iniciarSesionServlet extends HttpServlet {
 
-    @EJB PersonaFacade personaFacade;
+    @EJB PersonaService personaService;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,11 +36,20 @@ public class NewServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            List <Persona> personas = this.personaFacade.findAll();
+            String email = request.getParameter("email");
+            String pass = request.getParameter("pass");
             
-            request.setAttribute("personas", personas);
-            request.getRequestDispatcher("personas.jsp").forward(request, response);
-        
+            PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
+            
+            if (persona == null) {
+                String strError = "El usuario o la clave son incorrectos";
+                request.setAttribute("error", strError);
+                request.getRequestDispatcher("").forward(request, response);
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("email", email);
+                response.sendRedirect(request.getContextPath() + "/inicio.jsp");
+            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -23,6 +23,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
+import salidos.dto.PersonaDTO;
 
 /**
  *
@@ -232,6 +233,15 @@ public class Persona implements Serializable {
     @Override
     public String toString() {
         return "salidos.entity.Persona[ idPersona=" + idPersona + " ]";
+    }
+
+    public PersonaDTO toDTO() {
+        PersonaDTO dto = new PersonaDTO();
+    
+        dto.setEmail(email);
+        dto.setPass(password);
+        
+        return dto;
     }
     
 }
