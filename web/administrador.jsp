@@ -1,6 +1,6 @@
 <%-- 
-    Document   : inicio
-    Created on : 12 may 2022, 17:26:16
+    Document   : administrador
+    Created on : 12 may 2022, 18:45:16
     Author     : gil
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Administración</title>
     </head>
     <%
         PersonaDTO persona = (PersonaDTO)session.getAttribute("persona");
@@ -19,6 +19,6 @@
         }
     %>
     <body>
-        <h1>Bienvenido usuario: <%= persona.getNombre() %></h1>
+        <h1>Bienvenido administrador: <%= persona.getNombre() %></h1>
     </body>
 </html>

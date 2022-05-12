@@ -17,7 +17,8 @@ import salidos.service.PersonaService;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez
+ * @author 
  */
 @WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
 public class iniciarSesionServlet extends HttpServlet {
@@ -41,13 +42,20 @@ public class iniciarSesionServlet extends HttpServlet {
             
             PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
             
+            HttpSession session = request.getSession();
+            session.setAttribute("persona", persona);
+            
             if (persona == null) {
                 String strError = "El usuario o la clave son incorrectos";
                 request.setAttribute("error", strError);
                 request.getRequestDispatcher("").forward(request, response);
+            } else if (persona.getRol().equals("Administrador")) {
+                response.sendRedirect(request.getContextPath() + "/administrador.jsp");
+            } else if (persona.getRol().equals("Analista")) {
+                response.sendRedirect(request.getContextPath() + "/analista.jsp");
+            } else if (persona.getRol().equals("Marketing")) {
+                response.sendRedirect(request.getContextPath() + "/marketing.jsp");
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("email", email);
                 response.sendRedirect(request.getContextPath() + "/inicio.jsp");
             }
     }

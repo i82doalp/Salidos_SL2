@@ -4,7 +4,7 @@
     Author     : José Manuel Gil Rodríguez
 --%>
 
-<%@page import="salidos.entity.Persona"%>
+<%@page import="salidos.dto.PersonaDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
@@ -16,7 +16,7 @@
         String strErrorLogin = (String)request.getAttribute("error");
         if (strErrorLogin == null) strErrorLogin = "";
         
-        Persona persona = (Persona)session.getAttribute("persona");
+        PersonaDTO persona = (PersonaDTO)session.getAttribute("persona");
         if (persona != null) {
             response.sendRedirect(request.getContextPath() + "/inicio.jsp");
         }

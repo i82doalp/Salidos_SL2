@@ -23,6 +23,8 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
+import java.util.HashSet;
+import java.util.Set;
 import salidos.dto.PersonaDTO;
 
 /**
@@ -238,8 +240,17 @@ public class Persona implements Serializable {
     public PersonaDTO toDTO() {
         PersonaDTO dto = new PersonaDTO();
     
+        dto.setIdPersona(idPersona);
         dto.setEmail(email);
-        dto.setPass(password);
+        dto.setPassword(password);
+        dto.setNombre(nombre);
+        dto.setApellidos(apellidos);
+        dto.setDomicilio(domicilio);
+        dto.setCiudad(ciudad);
+        dto.setfNacimiento(fNacimiento);
+        dto.setSexo(sexo);
+        dto.setMonedero(monedero);
+        dto.setRol(rol);
         
         return dto;
     }

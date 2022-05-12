@@ -1,6 +1,6 @@
 <%-- 
-    Document   : inicio
-    Created on : 12 may 2022, 17:26:16
+    Document   : analista
+    Created on : 12 may 2022, 18:45:29
     Author     : gil
 --%>
 
@@ -19,6 +19,6 @@
         }
     %>
     <body>
-        <h1>Bienvenido usuario: <%= persona.getNombre() %></h1>
+        <h1>Bienvenido analista: <%= persona.getNombre() %></h1>
     </body>
 </html>
