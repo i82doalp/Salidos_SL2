@@ -1,3 +1,10 @@
-/nbproject/private/
-/build/
-/dist/
+nbproject/
+build/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+*.class
+*.jar
+*.war
+*.ear
