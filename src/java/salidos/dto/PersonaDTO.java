@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez
  */
 public class PersonaDTO {
     private Integer idPersona;

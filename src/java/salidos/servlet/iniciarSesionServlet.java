@@ -22,7 +22,6 @@ import salidos.service.ProductoService;
 /**
  *
  * @author José Manuel Gil Rodríguez
- * @author 
  */
 @WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
 public class iniciarSesionServlet extends HttpServlet {

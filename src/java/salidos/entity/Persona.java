@@ -23,13 +23,11 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
-import java.util.HashSet;
-import java.util.Set;
 import salidos.dto.PersonaDTO;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez
  */
 @Entity
 @Table(name = "persona")
