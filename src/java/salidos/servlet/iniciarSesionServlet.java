@@ -12,8 +12,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import salidos.dto.PersonaDTO;
+import salidos.dto.ProductoDTO;
+import salidos.entity.Producto;
 import salidos.service.PersonaService;
+import salidos.service.ProductoService;
 
 /**
  *
@@ -24,6 +28,7 @@ import salidos.service.PersonaService;
 public class iniciarSesionServlet extends HttpServlet {
 
     @EJB PersonaService personaService;
+    @EJB ProductoService ps;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,13 +42,23 @@ public class iniciarSesionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+            
+            
             String email = request.getParameter("email");
             String pass = request.getParameter("pass");
             
             PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
             
+            List<ProductoDTO> ventas = this.ps.getVentas(persona.getIdPersona());
+            
+            for(ProductoDTO p : ventas){
+                System.out.println(p.getNombreProducto());
+            }
+            
             HttpSession session = request.getSession();
             session.setAttribute("persona", persona);
+            
+            request.setAttribute("ventas", ventas);
             
             if (persona == null) {
                 String strError = "El usuario o la clave son incorrectos";
@@ -58,6 +73,7 @@ public class iniciarSesionServlet extends HttpServlet {
             } else {
                 response.sendRedirect(request.getContextPath() + "/inicio.jsp");
             }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

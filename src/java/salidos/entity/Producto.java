@@ -20,6 +20,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
+import salidos.dto.ProductoDTO;
 
 /**
  *
@@ -166,5 +167,19 @@ public class Producto implements Serializable {
     public String toString() {
         return "salidos.entity.Producto[ idProducto=" + idProducto + " ]";
     }
+    
+    
+    public ProductoDTO toDTO() {
+        
+        ProductoDTO dto = new ProductoDTO();
+        
+        dto.setIdProducto(idProducto);
+        dto.setNombreProducto(titulo);
+        dto.setPrecioCompra(precioCompra);
+    
+        return dto;
+    }
+    
+    
     
 }
