@@ -1,7 +1,7 @@
 <%-- 
     Document   : analista
     Created on : 12 may 2022, 18:45:29
-    Author     : gil
+    Author     : José Manuel Gil Rodríguez
 --%>
 
 <%@page import="salidos.dto.PersonaDTO"%>

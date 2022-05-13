@@ -12,7 +12,7 @@ import salidos.entity.Persona;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez
  */
 @Stateless
 public class PersonaService {

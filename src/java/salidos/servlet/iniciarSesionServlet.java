@@ -18,7 +18,6 @@ import salidos.service.PersonaService;
 /**
  *
  * @author José Manuel Gil Rodríguez
- * @author 
  */
 @WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
 public class iniciarSesionServlet extends HttpServlet {
