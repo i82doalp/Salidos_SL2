@@ -5,29 +5,24 @@
 package salidos.servlet;
 
 import jakarta.ejb.EJB;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import salidos.dto.PersonaDTO;
-import salidos.dto.ProductoDTO;
-import salidos.entity.Producto;
-import salidos.service.PersonaService;
-import salidos.service.ProductoService;
+import salidos.dto.AnalisisDTO;
+import salidos.service.AnalisisService;
 
 /**
  *
  * @author José Manuel Gil Rodríguez
  */
-@WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
-public class iniciarSesionServlet extends HttpServlet {
+@WebServlet(name = "analisisServlet", urlPatterns = {"/analisisServlet"})
+public class analisisServlet extends HttpServlet {
 
-    @EJB PersonaService personaService;
-    @EJB ProductoService ps;
+    @EJB AnalisisService analisisService;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,41 +35,19 @@ public class iniciarSesionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            
+            List<AnalisisDTO> listaAnalisis = this.analisisService.listarAnalisis();
         
-            
-            
-            String email = request.getParameter("email");
-            String pass = request.getParameter("pass");
-            
-            PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
-            
-            /*
-            List<ProductoDTO> ventas = this.ps.getVentas(persona.getIdPersona());
-            
-            for(ProductoDTO p : ventas){
-                System.out.println(p.getNombreProducto());
-            }
-            */
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("persona", persona);
-            
-            //request.setAttribute("ventas", ventas);
-            
-            if (persona == null) {
-                String strError = "El usuario o la clave son incorrectos";
+            if (listaAnalisis == null || listaAnalisis.isEmpty()) {
+                String strError = "No hay ningún informe disponible";
                 request.setAttribute("error", strError);
-                request.getRequestDispatcher("").forward(request, response);
-            } else if (persona.getRol().equals("Administrador")) {
-                response.sendRedirect(request.getContextPath() + "/administrador.jsp");
-            } else if (persona.getRol().equals("Analista")) {
-                response.sendRedirect(request.getContextPath() + "/analisisServlet");
-            } else if (persona.getRol().equals("Marketing")) {
-                response.sendRedirect(request.getContextPath() + "/marketing.jsp");
+                request.getRequestDispatcher("analista.jsp").forward(request, response);
             } else {
-                response.sendRedirect(request.getContextPath() + "/inicio.jsp");
+                request.setAttribute("listaAnalisis", listaAnalisis);
+                request.getRequestDispatcher("analista.jsp").forward(request, response);
             }
         
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

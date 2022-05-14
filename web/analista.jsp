@@ -4,6 +4,8 @@
     Author     : José Manuel Gil Rodríguez
 --%>
 
+<%@page import="salidos.dto.AnalisisDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="salidos.dto.PersonaDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,6 +19,10 @@
         if (persona == null) {
             response.sendRedirect(request.getContextPath());
         }
+        
+        List<AnalisisDTO> listaAnalisis = (List)request.getAttribute("listaAnalisis");
+        String strError = (String)request.getAttribute("error");
+        if (strError == null) strError = "";
     %>
     <body>
         <h1>Bienvenido analista</h1>
@@ -28,6 +34,10 @@
         </p>
     
         <h2>Informes generados</h2>
+        <p style="color:red;"><%= strError %></p>
+        <%
+            if (listaAnalisis != null ) {
+        %>
         <table border="1">
             <thead>
                 <tr>
@@ -48,7 +58,8 @@
                 </tr>
             </tbody>
         </table>
-
-    
+        <%
+            }
+        %>
     </body>
 </html>
