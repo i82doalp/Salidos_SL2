@@ -32,7 +32,7 @@
             Apellidos:  <%= persona.getApellidos() %><br>
             Email:  <%= persona.getEmail() %>
         </p>
-    
+        <a href="generarInforme.jsp">Generar informe</a>
         <h2>Informes generados</h2>
         <p style="color:red;"><%= strError %></p>
         <%
