@@ -24,7 +24,7 @@ import salidos.dto.ProductoDTO;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez (toDTO 20%)
  */
 @Entity
 @Table(name = "producto")

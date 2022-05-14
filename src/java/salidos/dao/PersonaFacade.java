@@ -12,7 +12,7 @@ import salidos.entity.Persona;
 
 /**
  *
- * @author José Manuel Gil Rodríguez
+ * @author José Manuel Gil Rodríguez (comprobarUsuario)
  */
 @jakarta.ejb.Stateless
 public class PersonaFacade extends AbstractFacade<Persona> {

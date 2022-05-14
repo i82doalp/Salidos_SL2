@@ -12,7 +12,7 @@ import salidos.entity.Producto;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez (findProductsByColumnInOrder)
  */
 @jakarta.ejb.Stateless
 public class ProductoFacade extends AbstractFacade<Producto> {

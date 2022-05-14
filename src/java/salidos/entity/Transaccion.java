@@ -21,7 +21,7 @@ import salidos.dto.TransaccionDTO;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez (toDTO)
  */
 @Entity
 @Table(name = "transaccion")

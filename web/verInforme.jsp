@@ -1,7 +1,7 @@
 <%-- 
     Document   : verInforme
     Created on : 14 may 2022, 18:44:26
-    Author     : gil
+    Author     : José Manuel Gil Rodríguez
 --%>
 
 <%@page import="salidos.dto.ProductoDTO"%>
