@@ -41,7 +41,7 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Nº INFORME</th>
                     <th>DESCRIPCIÓN</th>
                     <th></th>
                     <th></th>
@@ -49,13 +49,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><a href="#">Ver</a></td>
-                    <td><a href="#">Editar</a></td>
-                    <td><a href="#">Borrar</a></td>
-                </tr>
+                <%
+                    for (int i = 0; i < listaAnalisis.size(); i++) {
+                %>
+                    <tr>
+                        <td><%= listaAnalisis.get(i).getId() %></td>
+                        <td><%= listaAnalisis.get(i).getDescripcion() %></td>
+                        <td><a href="#">Ver</a></td>
+                        <td><a href="editarInformeServlet?id=<%= listaAnalisis.get(i).getId() %>">Editar</a></td>
+                        <td><a href="borrarInformeServlet?id=<%= listaAnalisis.get(i).getId() %>">Borrar</a></td>
+                    </tr>
+                <%
+                    }
+                %>
             </tbody>
         </table>
         <%

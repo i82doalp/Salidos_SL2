@@ -78,4 +78,23 @@ public class AnalisisService {
         this.analisisFacade.create(analisis);
     }
     
+    public void borrarAnalisis(int id) {
+        Analisis analisis = this.analisisFacade.find(id);
+        
+        this.analisisFacade.remove(analisis);
+    }
+    
+    public void modificarInforme(int id, String descripcion, int tabla, int columna, int orden) {
+        Analisis analisis = this.analisisFacade.find(id);
+        
+        this.rellenarAnalisis(analisis, descripcion, tabla, columna, orden);
+        
+        this.analisisFacade.edit(analisis);
+    }
+    
+    public AnalisisDTO buscarAnalisis (int id) {
+        Analisis analisis = this.analisisFacade.find(id);
+        return analisis.toDTO();
+    }
+    
 }

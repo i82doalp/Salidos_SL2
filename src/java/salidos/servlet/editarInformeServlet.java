@@ -12,13 +12,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import salidos.service.AnalisisService;
+import salidos.dto.AnalisisDTO;
 
 /**
  *
  * @author gil
  */
-@WebServlet(name = "generarInformeServlet", urlPatterns = {"/generarInformeServlet"})
-public class generarInformeServlet extends HttpServlet {
+@WebServlet(name = "editarInformeServlet", urlPatterns = {"/editarInformeServlet"})
+public class editarInformeServlet extends HttpServlet {
 
     @EJB AnalisisService analisisService;
     
@@ -34,29 +35,30 @@ public class generarInformeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+            String id = request.getParameter("id");
             String tabla = request.getParameter("tabla");
             String columna = request.getParameter("columna");
             String orden = request.getParameter("orden");
+            String descripcion = request.getParameter("descripcion");
             
-            
-            if (tabla != null && columna != null && orden != null) {
-                String descripcion = this.analisisService.generarDescripcion(Integer.parseInt(tabla), Integer.parseInt(columna), Integer.parseInt(orden));
+            if (tabla == null) {
+                AnalisisDTO analisis = this.analisisService.buscarAnalisis(Integer.parseInt(id));
                 
-                this.analisisService.crearInforme(descripcion, Integer.parseInt(tabla), Integer.parseInt(columna), Integer.parseInt(orden));
+                String informe;
+                if (analisis.getTabla() == 0)
+                    informe = "Personas";
+                else
+                    informe = "Productos";
+                
+                request.setAttribute("informe", informe);
+                request.setAttribute("analisis", analisis);
+                request.getRequestDispatcher("editarInforme.jsp").forward(request, response);
+            } else {
+                this.analisisService.modificarInforme(Integer.parseInt(id), descripcion, Integer.parseInt(tabla), Integer.parseInt(columna), Integer.parseInt(orden));
                 
                 response.sendRedirect(request.getContextPath() + "/analisisServlet");
-            } else {
-                String informe;
-                if (tabla.equals("0"))
-                    informe = "Informe sobre PERSONAS";
-                else
-                    informe = "Informe sobre PRODUCTOS";
-
-                request.setAttribute("informeSobre", informe);
-                request.setAttribute("tabla", tabla);
-                request.getRequestDispatcher("generarInforme.jsp").forward(request, response);
             }
-            
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

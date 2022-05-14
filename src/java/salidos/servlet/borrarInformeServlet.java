@@ -6,6 +6,7 @@ package salidos.servlet;
 
 import jakarta.ejb.EJB;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,10 +16,10 @@ import salidos.service.AnalisisService;
 
 /**
  *
- * @author gil
+ * @author Jose Manuel Gil Rodríguez
  */
-@WebServlet(name = "generarInformeServlet", urlPatterns = {"/generarInformeServlet"})
-public class generarInformeServlet extends HttpServlet {
+@WebServlet(name = "borrarInformeServlet", urlPatterns = {"/borrarInformeServlet"})
+public class borrarInformeServlet extends HttpServlet {
 
     @EJB AnalisisService analisisService;
     
@@ -34,29 +35,11 @@ public class generarInformeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            String tabla = request.getParameter("tabla");
-            String columna = request.getParameter("columna");
-            String orden = request.getParameter("orden");
+            String id = request.getParameter("id");
             
+            this.analisisService.borrarAnalisis(Integer.parseInt(id));
             
-            if (tabla != null && columna != null && orden != null) {
-                String descripcion = this.analisisService.generarDescripcion(Integer.parseInt(tabla), Integer.parseInt(columna), Integer.parseInt(orden));
-                
-                this.analisisService.crearInforme(descripcion, Integer.parseInt(tabla), Integer.parseInt(columna), Integer.parseInt(orden));
-                
-                response.sendRedirect(request.getContextPath() + "/analisisServlet");
-            } else {
-                String informe;
-                if (tabla.equals("0"))
-                    informe = "Informe sobre PERSONAS";
-                else
-                    informe = "Informe sobre PRODUCTOS";
-
-                request.setAttribute("informeSobre", informe);
-                request.setAttribute("tabla", tabla);
-                request.getRequestDispatcher("generarInforme.jsp").forward(request, response);
-            }
-            
+            response.sendRedirect(request.getContextPath() +  "/analisisServlet");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
