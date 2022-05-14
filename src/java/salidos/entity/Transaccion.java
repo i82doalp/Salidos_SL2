@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import salidos.dto.TransaccionDTO;
 
 /**
  *
@@ -134,6 +135,18 @@ public class Transaccion implements Serializable {
     @Override
     public String toString() {
         return "salidos.entity.Transaccion[ transaccionPK=" + transaccionPK + " ]";
+    }
+    
+    public TransaccionDTO toDTO() {
+        TransaccionDTO dto = new TransaccionDTO();
+        
+        dto.setFechaTransaccion(fechaTransaccion);
+        dto.setPrecioVenta(precioVenta);
+        dto.setTipo(tipo);
+        dto.setPersona(persona);
+        dto.setProducto(producto);
+        
+        return dto;
     }
     
 }

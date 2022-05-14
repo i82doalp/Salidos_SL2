@@ -55,7 +55,7 @@
                     <tr>
                         <td><%= listaAnalisis.get(i).getId() %></td>
                         <td><%= listaAnalisis.get(i).getDescripcion() %></td>
-                        <td><a href="#">Ver</a></td>
+                        <td><a href="verInformeServlet?id=<%= listaAnalisis.get(i).getId() %>">Ver</a></td>
                         <td><a href="editarInformeServlet?id=<%= listaAnalisis.get(i).getId() %>">Editar</a></td>
                         <td><a href="borrarInformeServlet?id=<%= listaAnalisis.get(i).getId() %>">Borrar</a></td>
                     </tr>

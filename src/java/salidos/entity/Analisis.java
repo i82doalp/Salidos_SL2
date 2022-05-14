@@ -19,7 +19,7 @@ import salidos.dto.AnalisisDTO;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez
  */
 @Entity
 @Table(name = "analisis")

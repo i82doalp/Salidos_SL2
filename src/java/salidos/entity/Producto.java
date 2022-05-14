@@ -176,6 +176,8 @@ public class Producto implements Serializable {
         dto.setIdProducto(idProducto);
         dto.setNombreProducto(titulo);
         dto.setPrecioCompra(precioCompra);
+        dto.setDescripcion(descripcion);
+        dto.setPrecioSalida(precioSalida);
     
         return dto;
     }

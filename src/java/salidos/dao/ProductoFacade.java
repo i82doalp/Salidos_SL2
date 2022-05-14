@@ -48,5 +48,43 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         
     }
     
-    
+    public List<Producto> findProductsByColumnInOrder (int columna, int orden) {
+        List <Producto> list = null;
+        
+        if (columna == 2){
+            if (orden == 0) {
+                Query q = this.em.createQuery("SELECT p FROM Producto p ORDER BY p.precioSalida ASC");
+                list = q.getResultList();
+            } else {
+                Query q = this.em.createQuery("SELECT p FROM Producto p ORDER BY p.precioSalida DESC");
+                list = q.getResultList();
+            }
+        }
+        
+        if (columna == 3) {
+            if (orden == 0) {
+                Query q = this.em.createQuery("SELECT p FROM Producto p ORDER BY p.precioCompra ASC");
+                list = q.getResultList();
+            } else {
+                Query q = this.em.createQuery("SELECT p FROM Producto p ORDER BY p.precioCompra DESC");
+                list = q.getResultList();
+            }
+        }
+        
+        if (columna == 4) {
+            if (orden == 0) {
+                Query q = this.em.createQuery("SELECT p FROM Producto p ORDER BY p.descripcion ASC");
+                list = q.getResultList();
+            } else {
+                Query q = this.em.createQuery("SELECT p FROM Producto p ORDER BY p.descripcion DESC");
+                list = q.getResultList();
+            }
+        }
+        
+        if (list == null || list.isEmpty()){
+            return null;
+        } else {
+            return list;
+        }
+    }
 }

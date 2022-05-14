@@ -9,14 +9,41 @@ package salidos.dto;
  * @author Pablo
  */
 public class ProductoDTO {
-    
-    int idProducto;
-    String nombreProducto;
-    float precioCompra;
-    
 
-  
+    private int idProducto;
+    private String nombreProducto;
+    private float precioCompra;
+    private float precioSalida;
+    private String descripcion;
+    
+    /**
+     * @return the precioSalida
+     */
+    public float getPrecioSalida() {
+        return precioSalida;
+    }
 
+    /**
+     * @param precioSalida the precioSalida to set
+     */
+    public void setPrecioSalida(float precioSalida) {
+        this.precioSalida = precioSalida;
+    }
+
+    /**
+     * @return the descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * @param descripcion the descripcion to set
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
     public void setPrecioCompra(float precioCompra) {
         this.precioCompra = precioCompra;
     }
@@ -42,7 +69,4 @@ public class ProductoDTO {
     }
 
    
-     
-     
-    
 }

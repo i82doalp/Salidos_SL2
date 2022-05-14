@@ -9,8 +9,14 @@ import jakarta.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import salidos.dao.AnalisisFacade;
+import salidos.dao.TransaccionFacade;
+import salidos.dao.ProductoFacade;
 import salidos.dto.AnalisisDTO;
+import salidos.dto.TransaccionDTO;
+import salidos.dto.ProductoDTO;
 import salidos.entity.Analisis;
+import salidos.entity.Transaccion;
+import salidos.entity.Producto;
 
 /**
  *
@@ -20,13 +26,37 @@ import salidos.entity.Analisis;
 public class AnalisisService {
     
     @EJB AnalisisFacade analisisFacade;
+    @EJB TransaccionFacade transaccionFacade;
+    @EJB ProductoFacade productoFacade;
     
-    private List<AnalisisDTO> listaEntityToDTO (List<Analisis> lista) {
+    private List<AnalisisDTO> listaAnalisisEntityToDTO (List<Analisis> lista) {
         List<AnalisisDTO> listaDTO = null;
         if (lista != null) {
             listaDTO = new ArrayList<>();
             for (Analisis analisis:lista) {
                 listaDTO.add(analisis.toDTO());
+            }
+        }
+        return listaDTO;
+    }
+    
+    private List<TransaccionDTO> listaTransaccionEntityToDTO (List<Transaccion> lista) {
+        List<TransaccionDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Transaccion transaccion:lista) {
+                listaDTO.add(transaccion.toDTO());
+            }
+        }
+        return listaDTO;
+    }
+    
+    private List<ProductoDTO> listaProductoEntityToDTO (List<Producto> lista) {
+        List<ProductoDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Producto producto:lista) {
+                listaDTO.add(producto.toDTO());
             }
         }
         return listaDTO;
@@ -41,7 +71,7 @@ public class AnalisisService {
     
     public List<AnalisisDTO> listarAnalisis () {
         List<Analisis> listaAnalisis = this.analisisFacade.findAll();
-        return this.listaEntityToDTO(listaAnalisis);
+        return this.listaAnalisisEntityToDTO(listaAnalisis);
     }
     
     public String generarDescripcion(int tabla, int columna, int orden){
@@ -92,9 +122,19 @@ public class AnalisisService {
         this.analisisFacade.edit(analisis);
     }
     
-    public AnalisisDTO buscarAnalisis (int id) {
+    public AnalisisDTO buscarAnalisis(int id) {
         Analisis analisis = this.analisisFacade.find(id);
         return analisis.toDTO();
+    }
+    
+    public List<TransaccionDTO> obtenerProductosVendidosCompradosPersonas(int columna, int orden) {
+        List<Transaccion> transacciones = this.transaccionFacade.findByTipoInOrder(columna, orden);
+        return this.listaTransaccionEntityToDTO(transacciones);
+    }
+    
+    public List<ProductoDTO> obtenerProductosPorColumna(int columna, int orden) {
+        List<Producto> productos = this.productoFacade.findProductsByColumnInOrder(columna, orden);
+        return this.listaProductoEntityToDTO(productos);
     }
     
 }
