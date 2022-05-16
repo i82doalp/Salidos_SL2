@@ -16,8 +16,10 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import salidos.dto.PersonaDTO;
+import salidos.entity.Interes;
 import salidos.entity.Persona;
 import salidos.entity.Producto;
+import salidos.service.InteresService;
 import salidos.service.PersonaService;
 import salidos.service.ProductoService;
 import salidos.service.TransaccionService;
@@ -32,7 +34,7 @@ public class nuevaVentaServlet extends HttpServlet {
     
     @EJB protected ProductoService productoservice;
     @EJB protected TransaccionService transaccionservice;
-    @EJB PersonaService personaservice;
+    @EJB InteresService interesservice;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,19 +53,17 @@ public class nuevaVentaServlet extends HttpServlet {
         
         PersonaDTO pers = (PersonaDTO)sesion.getAttribute("persona");
         
-        
+        Persona persona = pers.toEntity();
         
         
         String nombre = request.getParameter("nombre");
         float precio_salida = Float.valueOf(request.getParameter("precioS")); 
         String descripcion = request.getParameter("descripcion");
         String[] i = request.getParameterValues("interes");
-        List<String> intereses = Arrays.asList(i);
+       List<Interes> intereses = this.interesservice.getIntereses(i);
         
         
        Producto p =  this.productoservice.nuevaVenta(nombre, precio_salida, descripcion, intereses);
-        
-       Persona persona = this.personaservice.DTOaPersona(pers);
         
        this.transaccionservice.nuevaTransaccion(p,persona);
         

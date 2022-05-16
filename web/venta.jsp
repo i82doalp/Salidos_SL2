@@ -28,15 +28,15 @@
             <input type="radio" name="descripcion" id="descripcion3" value="pesimo" />
             <label for="descripcion3">Pésimo</label><br>
             Seleccionar intereses a los que puede pertenecer el producto : <br>
-            <input type="checkbox" name="interes" id="interes1" value="Deportes"/>
+            <input type="checkbox" name="interes" id="interes1" value="1"/>
             <label for="interes1">Deportes</label><br>
-            <input type="checkbox" name="interes" id="interes2" value="Arte"/>
+            <input type="checkbox" name="interes" id="interes2" value="2"/>
             <label for="interes2">Arte</label><br>
-            <input type="checkbox" name="interes" id="interes3" value="Entretenimiento"/>
+            <input type="checkbox" name="interes" id="interes3" value="3"/>
             <label for="interes3">Entretenimiento</label><br>
-            <input type="checkbox" name="interes" id="interes4" value="Tecnologia"/>
+            <input type="checkbox" name="interes" id="interes4" value="4"/>
             <label for="interes4">Tecnología</label><br>
-            <input type="checkbox" name="interes" id="interes5" value="Musica"/>
+            <input type="checkbox" name="interes" id="interes5" value="5"/>
             <label for="interes5">Música</label><br>
             <input type="submit" value="Enviar">
             

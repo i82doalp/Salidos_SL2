@@ -55,33 +55,22 @@ public class ProductoService {
         
     } 
     
-    public List<Interes> rellenarIntereses(List<String> intereses){
-        
-         List<Interes> lista = new ArrayList<>();
-        
-        for(int i=0;i<intereses.size();i++){
-           lista.add(this.interesfacade.buscarPorNombre(intereses.get(i))); 
-        }
-        
-       return lista;
-        
-    }
+   
     
-    public void rellenarProducto(Producto producto,String nombre,float precioS,String descripcion,List<String> intereses){
+    public void rellenarProducto(Producto producto,String nombre,float precioS,String descripcion,List<Interes> intereses){
         
         producto.setTitulo(nombre);
         producto.setPrecioSalida(precioS);
         producto.setDescripcion(descripcion);
         producto.setPrecioCompra(0);
-        List<Interes> interesList = rellenarIntereses(intereses);
-        producto.setInteresList(interesList);
+        producto.setInteresList(intereses);
         
         
         
     }
     
     
-    public Producto nuevaVenta(String nombre,float precioS,String descripcion,List<String> intereses){
+    public Producto nuevaVenta(String nombre,float precioS,String descripcion,List<Interes> intereses){
         
        Producto producto = new Producto();
        rellenarProducto(producto,nombre,precioS,descripcion,intereses);
