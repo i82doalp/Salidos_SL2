@@ -19,6 +19,7 @@ public class PersonaService {
     
     @EJB PersonaFacade personaFacade;
     
+   
     public PersonaDTO comprobarCredenciales (String email, String pass) {
         Persona persona = this.personaFacade.comprobarUsuario(email, pass);
         if (persona == null) {
@@ -27,4 +28,29 @@ public class PersonaService {
             return persona.toDTO();
         }
     }
+    
+    
+    public Persona DTOaPersona(PersonaDTO personadto){
+        
+        Persona persona = new Persona();
+        
+        persona.setNombre(personadto.getNombre());
+        persona.setApellidos(personadto.getApellidos());
+        persona.setCiudad(personadto.getCiudad());
+        persona.setDomicilio(personadto.getDomicilio());
+        persona.setEmail(personadto.getEmail());
+        persona.setFNacimiento(personadto.getfNacimiento());
+        persona.setIdPersona(personadto.getIdPersona());
+        persona.setMonedero(personadto.getMonedero());
+        persona.setPassword(personadto.getPassword());
+        persona.setRol(personadto.getRol());
+        persona.setSexo(personadto.getSexo());
+        
+        return persona;
+        
+        
+        
+    }
+    
+    
 }

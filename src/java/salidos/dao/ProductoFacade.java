@@ -49,4 +49,23 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     }
     
     
+    public Producto buscarPorNombre(String nombre){
+        
+        
+        Query q = this.em.createNamedQuery("findByTitulo");
+        
+        q.setParameter("titulo",nombre);
+        
+        List<Producto> product = q.getResultList();
+        
+        if(product == null || product.isEmpty()){
+            return null;
+        }else{
+            return product.get(0);
+        }
+        
+        
+    }
+    
+    
 }
