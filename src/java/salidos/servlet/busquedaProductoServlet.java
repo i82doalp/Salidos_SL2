@@ -14,18 +14,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import salidos.dto.PersonaDTO;
-import salidos.service.PersonaService;
+import salidos.dto.ProductoDTO;
+import salidos.entity.Producto;
+import salidos.service.ProductoService;
 
 /**
  *
  * @author Cristian
  */
-@WebServlet(name = "administrarPersonaServlet", urlPatterns = {"/administrarPersonaServlet"})
-public class administrarPersonaServlet extends HttpServlet {
+@WebServlet(name = "busquedaProductoServlet", urlPatterns = {"/busquedaProductoServlet"})
+public class busquedaProductoServlet extends HttpServlet {
 
-    
-    @EJB PersonaService personaService;
+    @EJB ProductoService productoService;
     /**
+     * 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -36,36 +38,17 @@ public class administrarPersonaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         
-        String id = request.getParameter("id");
-        String accion= request.getParameter("accion");
         
-        PersonaDTO persona= personaService.encontrarPorId(Integer.parseInt(id));
+        String nombre = request.getParameter("filtro");
+        Producto producto_buscado= (Producto)productoService.buscarPorNombre(nombre);
         
-  if(persona!= null)
-        {
-            if(accion.contentEquals("editar"))
-            {
-                HttpSession session = request.getSession();
-                
-                session.setAttribute("persona_editar", persona);
-                request.getRequestDispatcher("editarPersona.jsp").forward(request, response);
-                
-            }
-            else
-            {
-                this.personaService.deletePersona(Integer.parseInt(id));
-                response.sendRedirect(request.getContextPath() +  "/administradorServlet");
-
-            }
-        }
-        else
-        {
-            String strError = "Ha ocurrido un error";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("administradorServlet").forward(request, response);
-        }
+        HttpSession session = request.getSession();
+        PersonaDTO personadto= (PersonaDTO)session.getAttribute("persona");
+        
+        session.setAttribute("buscado", producto_buscado.toDTO());
+        request.getRequestDispatcher("ventasServlet?id="+personadto.getIdPersona()).forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

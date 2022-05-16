@@ -125,9 +125,9 @@ public class PersonaService {
        Persona persona= personaFacade.find(id);
 
        
-       
+       persona.setInteresList(null);
        this.personaFacade.remove(persona);
-       interesFacade.findAll();
+       
           
     }
     

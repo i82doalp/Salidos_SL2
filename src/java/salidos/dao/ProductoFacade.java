@@ -56,7 +56,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     public Producto buscarPorNombre(String nombre){
         
         
-        Query q = this.em.createNamedQuery("findByTitulo");
+        Query q = this.em.createNamedQuery("Producto.findByTitulo");
         
         q.setParameter("titulo",nombre);
         

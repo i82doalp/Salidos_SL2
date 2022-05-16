@@ -4,27 +4,21 @@
  */
 package salidos.servlet;
 
-import jakarta.ejb.EJB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import salidos.dto.PersonaDTO;
-import salidos.service.PersonaService;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author Cristian
  */
-@WebServlet(name = "administrarPersonaServlet", urlPatterns = {"/administrarPersonaServlet"})
-public class administrarPersonaServlet extends HttpServlet {
+@WebServlet(name = "editarPersonaServlet", urlPatterns = {"/editarPersonaServlet"})
+public class editarPersonaServlet extends HttpServlet {
 
-    
-    @EJB PersonaService personaService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,36 +30,7 @@ public class administrarPersonaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         
-        String id = request.getParameter("id");
-        String accion= request.getParameter("accion");
-        
-        PersonaDTO persona= personaService.encontrarPorId(Integer.parseInt(id));
-        
-  if(persona!= null)
-        {
-            if(accion.contentEquals("editar"))
-            {
-                HttpSession session = request.getSession();
-                
-                session.setAttribute("persona_editar", persona);
-                request.getRequestDispatcher("editarPersona.jsp").forward(request, response);
-                
-            }
-            else
-            {
-                this.personaService.deletePersona(Integer.parseInt(id));
-                response.sendRedirect(request.getContextPath() +  "/administradorServlet");
-
-            }
-        }
-        else
-        {
-            String strError = "Ha ocurrido un error";
-            request.setAttribute("error", strError);
-            request.getRequestDispatcher("administradorServlet").forward(request, response);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

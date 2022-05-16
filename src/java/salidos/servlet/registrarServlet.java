@@ -57,7 +57,8 @@ public class registrarServlet extends HttpServlet {
         String ciudad = request.getParameter("ciudad"); 
         String fecha_nacimiento = request.getParameter("f_nacimiento"); 
         String sexo = request.getParameter("sexo"); 
-        String rol = "Usuario";
+        String rol = request.getParameter("rol");
+  
         String[] i = request.getParameterValues("intereses");
         
         
@@ -107,9 +108,18 @@ public class registrarServlet extends HttpServlet {
              personaService.registrarUsuario(persona);
              
              
-            String correcto = "USUARIO CORRECTAMENTE REGISTRADO!! Inicia sesión";
+            String correcto = "USUARIO CORRECTAMENTE REGISTRADO";
             request.setAttribute("correcto", correcto);
-            request.getRequestDispatcher("").forward(request, response);            
+
+            if(rol.contentEquals("Usuario"))
+            {
+                request.getRequestDispatcher("").forward(request, response); 
+            }
+            else
+            {
+                request.getRequestDispatcher("administradorServlet").forward(request, response); 
+            }
+                       
 
             
         }

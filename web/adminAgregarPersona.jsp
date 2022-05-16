@@ -1,51 +1,27 @@
 <%-- 
-    Document   : login
-    Created on : 12 may 2022, 15:11:46
-    Author     : José Manuel Gil Rodríguez
-    Author     : Cristian Alberto Sanchez
+    Document   : adminAgregarPersona
+    Created on : 16 may 2022, 17:39:25
+    Author     : Cristian
 --%>
 
-<%@page import="salidos.dto.PersonaDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Inicio</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
     </head>
-    <%
-        String strError = (String)request.getAttribute("error");
-        if (strError == null) strError = "";
-        
-        String strError_res = (String)request.getAttribute("error_res");
-        if (strError_res == null) strError_res = "";
-        
-        String correct = (String)request.getAttribute("correcto");
-        if (correct == null) correct = "";
-        
-        PersonaDTO persona = (PersonaDTO)session.getAttribute("persona");
-        if (persona != null) {
-            response.sendRedirect(request.getContextPath() + "/inicio.jsp");
-        }
-    %>
     <body>
-        <h1>Bienvenido</h1><br>
+        <%String strError = (String)request.getAttribute("error");
+        if (strError == null) strError = "";
+        String correcto = (String)request.getAttribute("correcto");
+        if (correcto == null) correcto = "";
+        %>
         
-        <h2>Inciar sesión</h2>
+        
+        <h2>Agregar un usuario</h2>
         <p style="color:red;"><%= strError %></p>
-        <p style="color:greenyellow;"><%= correct %></p>
-        <form method="POST" action="iniciarSesionServlet">
-            <label>Email</label>
-            <input type="email" name="email" required/>
-            <label>Contraseña</label>
-            <input type="password" name="pass" required/>            
-            <input type="submit" value="Iniciar sesión"/>
-        </form>
-        
-        
-        
-        <h2>¿No estás registrado? ¡Hazlo ahora!</h2>
-        <p style="color:red;"><%= strError_res %></p>
+        <p style="color:green;"><%= correcto %></p>
         <form method="POST" action="registrarServlet">
             <label>Email</label>
             <input type="email" name="email_register" required/><br>
@@ -62,13 +38,21 @@
             <label>Ciudad</label>
             <input type="text" name="ciudad" required/><br>
             
+            <select name="rol">
+                <option disabled=""selected>Tipo Rol</option>
+                <option value="Usuario">Usuario</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Analista">Analista</option>
+                <option value="Marketing">Marketing</option>
+                
+            </select><br>
+
             <input type="radio" name="sexo"  value='H'>
             <label>Hombre</label><br>
             <input type="radio" name="sexo"  value='M'>
             <label>Mujer</label><br>
-            <input type="hidden" name="rol"  value="Usuario">
-        
-            <label>Selecciona algun interes</label><br>
+            
+            <p>Selecciona algun interes (Opcional)</p>
             <input type="checkbox" name="intereses" value="1">
             <label>Deportes</label><br>
             
@@ -84,7 +68,7 @@
             <input type="checkbox" name="intereses" value="5">
             <label>Musica</label><br>
             
-            <input type="submit" value="Registrate"/>
+            <input type="submit" value="Registrar usuario"/>
         </form>
         
     </body>
