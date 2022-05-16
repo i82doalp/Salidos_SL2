@@ -131,6 +131,38 @@ public class PersonaService {
           
     }
     
+    
+     private void rellenarPersona (Persona persona ,String email, String pass, String Nombre, String Apellidos,
+                  String domicilio, String ciudad, Date fecha_nacimiento, char sexo,
+                  String rol, List<Interes> interes_persona ) {
+        persona.setEmail(email);
+        persona.setPassword(pass);
+        persona.setNombre(Nombre);
+        persona.setApellidos(Apellidos);
+        persona.setDomicilio(domicilio);
+        persona.setCiudad(ciudad);
+        persona.setFNacimiento(fecha_nacimiento);
+        persona.setSexo(sexo);
+        persona.setRol(rol);
+        persona.setInteresList(interes_persona);
+    }
+     
+     
+    
+     public void modificarPersona(int id ,String email, String pass, String Nombre, String Apellidos,
+                  String domicilio, String ciudad, Date fecha_nacimiento, char sexo,
+                  String rol, List<Interes> interes_persona ) 
+     {
+        Persona persona = this.personaFacade.find(id);
+        
+        this.rellenarPersona(persona,email,  pass,  Nombre,  Apellidos,
+                   domicilio,  ciudad,  fecha_nacimiento,  sexo,
+                   rol, interes_persona);
+
+        
+        this.personaFacade.edit(persona);
+    }
+    
     public List<Interes> retornarListaIntereses(String [] intereses) 
     {
         List<Interes> lista_intereses = new ArrayList<Interes>();
