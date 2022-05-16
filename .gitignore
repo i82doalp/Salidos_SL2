@@ -2,6 +2,7 @@ nbproject/
 build/
 dist/
 nbdist/
+setup/glassfish-resources.xml
 nbactions.xml
 nb-configuration.xml
 *.class
