@@ -66,6 +66,22 @@
             <label>Hombre</label><br>
             <input type="radio" name="sexo"  value='M'>
             <label>Mujer</label><br>
+
+            <p>Selecciona algun interes</p><br>
+            <input type="checkbox" name="intereses" value="1">
+            <label>Deportes</label><br>
+            
+            <input type="checkbox" name="intereses" value="2">
+            <label>Arte</label><br>
+            
+            <input type="checkbox" name="intereses" value="3">
+            <label>Entretenimiento</label><br>
+            
+            <input type="checkbox" name="intereses" value="4">
+            <label>Tecnologia</label><br>
+            
+            <input type="checkbox" name="intereses" value="5">
+            <label>Musica</label><br>
             
             <input type="submit" value="Registrate"/>
         </form>
