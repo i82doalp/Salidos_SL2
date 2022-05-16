@@ -41,4 +41,16 @@ public class PersonaFacade extends AbstractFacade<Persona> {
         }
     }
     
+    public Persona findByEmail (String email) {
+        Query q = this.em.createQuery("SELECT p FROM Persona p WHERE p.email = :email");
+        q.setParameter("email", email);
+        
+        List<Persona> list = q.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        } else {
+            return list.get(0);
+        }
+    }
+    
 }

@@ -5,6 +5,7 @@
 package salidos.dto;
 
 import java.util.Date;
+import salidos.entity.Persona;
 
 /**
  *
@@ -180,4 +181,22 @@ public class PersonaDTO {
         this.rol = rol;
     }
     
+    
+    public Persona toEntity() {
+        Persona entity = new Persona();
+    
+        entity.setIdPersona(idPersona);
+        entity.setEmail(email);
+        entity.setPassword(password);
+        entity.setNombre(nombre);
+        entity.setApellidos(apellidos);
+        entity.setDomicilio(domicilio);
+        entity.setCiudad(ciudad);
+        entity.setFNacimiento(fNacimiento);
+        entity.setSexo(sexo);
+        entity.setMonedero(monedero);
+        entity.setRol(rol);
+        
+        return entity;
+    }
 }
