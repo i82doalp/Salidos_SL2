@@ -67,7 +67,7 @@ public class nuevaVentaServlet extends HttpServlet {
         
        this.transaccionservice.nuevaTransaccion(p,persona);
         
-       request.getRequestDispatcher("inicio.jsp").forward(request, response);
+       request.getRequestDispatcher("ventasServlet?id="+pers.getIdPersona()).forward(request, response);
         
     }
 
