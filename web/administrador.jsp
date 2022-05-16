@@ -51,6 +51,9 @@
             <tbody>
                 <%
                     for (int i = 0; i < listaPersonas.size(); i++) {
+                    
+                    if(persona.getIdPersona()!=(listaPersonas.get(i).getIdPersona()))
+                    {
                 %>
                     <tr>
                         <td><%= listaPersonas.get(i).getIdPersona() %></td>
@@ -64,6 +67,7 @@
                     </tr>
                 <%
                     }
+                 }
                 %>
             </tbody>
         </table>

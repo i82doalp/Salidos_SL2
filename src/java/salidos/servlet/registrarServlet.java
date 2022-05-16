@@ -17,10 +17,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import salidos.dao.PersonaFacade;
 import salidos.dto.PersonaDTO;
+import salidos.entity.Interes;
 import salidos.entity.Persona;
 import salidos.service.PersonaService;
 
@@ -56,11 +58,16 @@ public class registrarServlet extends HttpServlet {
         String fecha_nacimiento = request.getParameter("f_nacimiento"); 
         String sexo = request.getParameter("sexo"); 
         String rol = "Usuario";
+        String[] i = request.getParameterValues("intereses");
+        
+        
         float monedero = 0;
         
         //Si ha recibido null es que no lo ha encontrado por lo que procedemos a registrar
-        PersonaDTO personafacade = this.personaService.comprobarCredenciales(email, pass);
-        if (personafacade==null)
+        PersonaDTO pers = this.personaService.comprobarCredenciales(email, pass);
+        
+        
+        if (pers==null)
         {
             Persona persona = new Persona();
             
@@ -72,6 +79,10 @@ public class registrarServlet extends HttpServlet {
             persona.setCiudad(ciudad);
             persona.setRol(rol);
             persona.setMonedero(monedero);
+            List<Interes> interes_persona= this.personaService.retornarListaIntereses(i);
+            persona.setInteresList(interes_persona);
+            
+            
             
             char sex =sexo.charAt(0); //Conversion a char
             persona.setSexo(sex);

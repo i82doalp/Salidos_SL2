@@ -128,10 +128,22 @@ public class PersonaService {
        
        this.personaFacade.remove(persona);
        interesFacade.findAll();
+          
+    }
+    
+    public List<Interes> retornarListaIntereses(String [] intereses) 
+    {
+        List<Interes> lista_intereses = new ArrayList<Interes>();
+        
+       for(int i =0; i<intereses.length;i++)
+       {
+           lista_intereses.add(interesFacade.find(Integer.parseInt(intereses[i])));
+       }
+           
+       return lista_intereses;
        
-     
-      
-               
+       
+
     }
 
 }
