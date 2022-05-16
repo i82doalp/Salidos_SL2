@@ -37,19 +37,19 @@
         <p style="color:green;"><%= correcto %></p>
         <form method="POST" action="editarPersonaServlet">
             <label>Email</label>
-            <input type="email" name="email_register" placeholder="<%=persona_editar.getEmail()%> "required/><br>
+            <input type="email" name="email_register" placeholder="<%=persona_editar.getEmail()%> "/><br>
             <label>Contraseña</label>
-            <input type="password" name="pass_register" placeholder="<%=persona_editar.getPassword()%> " required/>  <br>
+            <input type="password" name="pass_register" placeholder="<%=persona_editar.getPassword()%> " />  <br>
             <label>Nombre</label>
-            <input type="text" name="nombre"  placeholder="<%=persona_editar.getNombre()%> " required/> <br>
+            <input type="text" name="nombre"  placeholder="<%=persona_editar.getNombre()%> " /> <br>
             <label>Apellidos</label>
-            <input type="text" name="apellidos"  placeholder="<%=persona_editar.getApellidos()%> " required/> <br>
+            <input type="text" name="apellidos"  placeholder="<%=persona_editar.getApellidos()%> " /> <br>
             <label>Fecha de nacimiento</label>
-            <input type="date" name="f_nacimiento"  placeholder="<%=persona_editar.getfNacimiento()%> " required/><br>
+            <input type="date" name="f_nacimiento"  placeholder="<%=persona_editar.getfNacimiento()%> " /><br>
             <label>Domicilio</label>
-            <input type="text" name="domicilio"  placeholder="<%=persona_editar.getDomicilio()%> " required/> <br>
+            <input type="text" name="domicilio"  placeholder="<%=persona_editar.getDomicilio()%> " /> <br>
             <label>Ciudad</label>
-            <input type="text" name="ciudad"  placeholder="<%=persona_editar.getCiudad()%> " required/><br>
+            <input type="text" name="ciudad"  placeholder="<%=persona_editar.getCiudad()%> " /><br>
             
             <select name="rol">
                 <option disabled=""selected>Tipo Rol</option>
@@ -75,9 +75,9 @@
             <label>Tecnologia</label><br>
             
             <input type="checkbox" name="intereses" value="5">
-            <label>Musica</label><br>
+            <label>Musica</label><br><br>
             
-            <input type="submit" value="Registrar usuario"/>
+            <input type="submit" value="Editar usuario"/>
         </form>
         
     </body>

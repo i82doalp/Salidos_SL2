@@ -76,6 +76,7 @@
         <form method="post" action="busquedaProductoServlet">
             
             <input type="text" name="filtro" placeholder="Buscar por nombre">
+            <input type="hidden" name="tipo" value="ventas">
             <input type="submit" value="BUSCAR">
             
         </form><br>

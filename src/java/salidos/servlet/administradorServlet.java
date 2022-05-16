@@ -14,7 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import salidos.dto.PersonaDTO;
+import salidos.dto.ProductoDTO;
 import salidos.service.PersonaService;
+import salidos.service.ProductoService;
 
 /**
  *
@@ -24,6 +26,7 @@ import salidos.service.PersonaService;
 public class administradorServlet extends HttpServlet {
 
     @EJB PersonaService personaService;
+    @EJB ProductoService productoService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,12 +40,15 @@ public class administradorServlet extends HttpServlet {
             throws ServletException, IOException {
         
         List <PersonaDTO> listaPersonasDTO = personaService.listaPersonas();
+        List <ProductoDTO> listaProductosDTO = productoService.getAllProductos();
         
         if (listaPersonasDTO == null || listaPersonasDTO.isEmpty()) {
                 String strError = "No hay personas";
                 request.setAttribute("error", strError);
                 request.getRequestDispatcher("administrador.jsp").forward(request, response);
             } else {
+                
+                request.setAttribute("listaProductos", listaProductosDTO);
                 request.setAttribute("listaPersonas", listaPersonasDTO);
                 request.getRequestDispatcher("administrador.jsp").forward(request, response);
             }

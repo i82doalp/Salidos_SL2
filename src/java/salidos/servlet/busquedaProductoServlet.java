@@ -41,13 +41,42 @@ public class busquedaProductoServlet extends HttpServlet {
         
         
         String nombre = request.getParameter("filtro");
+        String tipo = request.getParameter("tipo");
         Producto producto_buscado= (Producto)productoService.buscarPorNombre(nombre);
-        
         HttpSession session = request.getSession();
         PersonaDTO personadto= (PersonaDTO)session.getAttribute("persona");
         
+        if (producto_buscado==null)
+        {
+            String busqueda_incorrecta = "Busqueda Incorrecta";
+            session.setAttribute("busqueda_incorrecta", busqueda_incorrecta);
+                if(tipo.contentEquals("administrador"))
+                {
+                    response.sendRedirect(request.getContextPath() + "/administradorServlet");
+                }
+                else
+                {
+                request.getRequestDispatcher("ventasServlet?id="+personadto.getIdPersona()).forward(request, response);
+
+                }
+        }
+        else{
+        
         session.setAttribute("buscado", producto_buscado.toDTO());
+        
+        if(tipo.contentEquals("administrador"))
+        {
+            response.sendRedirect(request.getContextPath() + "/administradorServlet");
+        }
+        else
+        {
         request.getRequestDispatcher("ventasServlet?id="+personadto.getIdPersona()).forward(request, response);
+
+        }
+        
+        }
+        
+        
         
     }
 

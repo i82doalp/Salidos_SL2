@@ -55,6 +55,21 @@ public class ProductoService {
         
     } 
     
+     public List<ProductoDTO> getAllProductos (){
+        
+        
+        List<Producto> productos = this.productofacade.findAll();
+        
+        if(productos == null){
+            return null;
+        }else{
+            return this.listaEntityADTO(productos);
+        }
+        
+        
+        
+    }
+    
     public List<Interes> rellenarIntereses(List<String> intereses){
         
          List<Interes> lista = new ArrayList<>();
