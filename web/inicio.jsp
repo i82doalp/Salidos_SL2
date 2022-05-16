@@ -21,36 +21,95 @@
             response.sendRedirect(request.getContextPath());
         }
         
+        
     %>
     <body>
         <h1>Bienvenido usuario: <%= persona.getNombre() %></h1>
  
-        <h3>A continuación se muestran las ventas del cliente : </h3>
-            
-        <table>
+        <%   
+        
+        ProductoDTO busqueda = (ProductoDTO)session.getAttribute("buscado");
+
+        
+        if(busqueda!=null){
+        
+        %>
+        <h3>Resultado de la busqueda</h3>
+        
+         <table border="1">
             <thead>
                 <tr>
                     <td>Id objeto</td>
                     <td>Nombre objeto</td>
+                    <td>Precio salida</td>
                     <td>Precio compra</td>
                 </tr>
             </thead>
             <tbody>
                 <%
-                    for(ProductoDTO venta : ventas){
+                   
+                String compra_buscada;
+
+                   if(busqueda.getPrecioCompra()==0){compra_buscada="En venta";}else{compra_buscada= (Float.toString(busqueda.getPrecioCompra())); compra_buscada = compra_buscada +"€";}
                 %>
                 <tr>
-                    <td><%= venta.getIdProducto() %></td>
-                    <td><%= venta.getNombreProducto() %></td>
-                    <td><%= venta.getPrecioCompra() %>€</td>
+                    <td><%= busqueda.getIdProducto() %></td>
+                    <td><%= busqueda.getNombreProducto() %></td>
+                    <td><%= busqueda.getPrecioSalida() %>€</td>
+                    <td><%= compra_buscada %></td>
+                </tr>
+                <%
+                    
+                %>
+            </tbody>
+        </table>
+        
+        
+         <%   
+        
+             }
+        
+        
+        %>
+        <h3>A continuación se muestran las ventas del cliente : (orden ascendente) </h3><br> 
+        
+        <form method="post" action="busquedaProductoServlet">
+            
+            <input type="text" name="filtro" placeholder="Buscar por nombre">
+            <input type="submit" value="BUSCAR">
+            
+        </form><br>
+    
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Id objeto</td>
+                    <td>Nombre objeto</td>
+                    <td>Precio salida</td>
+                    <td>Precio compra</td>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                    String compra;
+                    
+                    for(int i = ventas.size()-1; i>=0; i-- ){
+                    
+                   if(ventas.get(i).getPrecioCompra()==0){compra="En venta";}else{compra= (Float.toString(ventas.get(i).getPrecioCompra())); compra = compra +"€";}
+                %>
+                <tr>
+                    <td><%= ventas.get(i).getIdProducto() %></td>
+                    <td><%= ventas.get(i).getNombreProducto() %></td>
+                    <td><%= ventas.get(i).getPrecioSalida() %>€</td>
+                    <td><%= compra %></td>
                 </tr>
                 <%
                     }
                 %>
             </tbody>
-        </table>
+        </table><br>
         
-            <a href="venta.jsp">Nueva venta</a>
+            <a href="venta.jsp">NUEVA VENTA</a>
             
             
     </body>

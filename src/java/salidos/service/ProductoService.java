@@ -28,7 +28,7 @@ public class ProductoService {
     
     private List<ProductoDTO> listaEntityADTO(List<Producto> lista){
         
-        List<ProductoDTO> listaDTO = null;
+        List<ProductoDTO> listaDTO = new ArrayList<ProductoDTO>();
         
         if(lista != null){
             listaDTO = new ArrayList<>();

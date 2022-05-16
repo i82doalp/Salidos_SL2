@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import salidos.dto.PersonaDTO;
 import salidos.service.PersonaService;
 
@@ -42,13 +43,13 @@ public class administrarPersonaServlet extends HttpServlet {
         
         PersonaDTO persona= personaService.encontrarPorId(Integer.parseInt(id));
         
-        System.out.println("OYEEEEEEEE que el email es"+persona.toEntity().getIdPersona());
-        
-        if(persona!= null)
+  if(persona!= null)
         {
             if(accion.contentEquals("editar"))
             {
-                request.setAttribute("personaDTO", persona);
+                HttpSession session = request.getSession();
+                
+                session.setAttribute("persona_editar", persona);
                 request.getRequestDispatcher("editarPersona.jsp").forward(request, response);
                 
             }

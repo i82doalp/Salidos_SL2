@@ -45,6 +45,8 @@ public class ventasServlet extends HttpServlet {
                   
         request.setAttribute("ventas",ventas);
         
+        
+        
        request.getRequestDispatcher("inicio.jsp").forward(request,response);
         
     }

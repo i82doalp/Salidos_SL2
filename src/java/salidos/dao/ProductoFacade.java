@@ -38,7 +38,10 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         q.setParameter("id", idpersona);
         
         List<Producto> ventas = q.getResultList();
-        
+        for (int i=0; i<ventas.size(); i++)
+        {
+            System.out.println(ventas.get(i).getIdProducto()+ ventas.get(i).getTitulo());
+        }
         
         if(ventas == null || ventas.isEmpty()){
             return null;
@@ -53,7 +56,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     public Producto buscarPorNombre(String nombre){
         
         
-        Query q = this.em.createNamedQuery("findByTitulo");
+        Query q = this.em.createNamedQuery("Producto.findByTitulo");
         
         q.setParameter("titulo",nombre);
         

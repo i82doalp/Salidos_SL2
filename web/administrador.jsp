@@ -31,6 +31,9 @@
             Apellidos:  <%= persona.getApellidos() %><br>
             Email:  <%= persona.getEmail() %>
         </p>
+        <td><a href="adminAgregarPersona.jsp">Agregar nuevo usuario</a></td>
+        
+        
         
         <h2>Administración de usuarios</h2>
         <p style="color:red;"><%= strError %></p>
