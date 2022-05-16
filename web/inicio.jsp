@@ -102,6 +102,8 @@
                     <td><%= ventas.get(i).getNombreProducto() %></td>
                     <td><%= ventas.get(i).getPrecioSalida() %>€</td>
                     <td><%= compra %></td>
+                    <td> <a href="editarProductoServlet.jsp?">Editar</a></td>
+                    <td> <a href="borrarProductoServlet.jsp">Borrar</a></td>
                 </tr>
                 <%
                     }
