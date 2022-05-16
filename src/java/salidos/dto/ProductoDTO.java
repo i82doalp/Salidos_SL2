@@ -4,6 +4,8 @@
  */
 package salidos.dto;
 
+
+
 /**
  *
  * @author Pablo
@@ -16,6 +18,8 @@ public class ProductoDTO {
     private float precioSalida;
     private String descripcion;
     
+    
+
     /**
      * @return the precioSalida
      */

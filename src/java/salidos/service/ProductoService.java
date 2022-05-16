@@ -8,9 +8,10 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
+import salidos.dao.InteresFacade;
 import salidos.dao.ProductoFacade;
-import salidos.dao.TransaccionFacade;
 import salidos.dto.ProductoDTO;
+import salidos.entity.Interes;
 import salidos.entity.Producto;
 
 /**
@@ -21,6 +22,7 @@ import salidos.entity.Producto;
 public class ProductoService {
     
     @EJB ProductoFacade productofacade;
+    @EJB InteresFacade interesfacade;
     
     
     
@@ -52,5 +54,52 @@ public class ProductoService {
         
         
     } 
+    
+    public List<Interes> rellenarIntereses(List<String> intereses){
+        
+         List<Interes> lista = new ArrayList<>();
+        
+        for(int i=0;i<intereses.size();i++){
+           lista.add(this.interesfacade.buscarPorNombre(intereses.get(i))); 
+        }
+        
+       return lista;
+        
+    }
+    
+    public void rellenarProducto(Producto producto,String nombre,float precioS,String descripcion,List<String> intereses){
+        
+        producto.setTitulo(nombre);
+        producto.setPrecioSalida(precioS);
+        producto.setDescripcion(descripcion);
+        producto.setPrecioCompra(0);
+        List<Interes> interesList = rellenarIntereses(intereses);
+        producto.setInteresList(interesList);
+        
+        
+        
+    }
+    
+    
+    public Producto nuevaVenta(String nombre,float precioS,String descripcion,List<String> intereses){
+        
+       Producto producto = new Producto();
+       rellenarProducto(producto,nombre,precioS,descripcion,intereses);
+       this.productofacade.create(producto);
+       
+       return producto;
+       
+    }
+    
+    
+    
+    public Producto buscarPorNombre(String nombre){
+        
+        Producto p = this.productofacade.buscarPorNombre(nombre);
+        
+        return p;
+        
+    }
+    
     
 }

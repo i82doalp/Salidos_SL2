@@ -17,19 +17,15 @@
     <%
         PersonaDTO persona = (PersonaDTO)session.getAttribute("persona");
         List<ProductoDTO> ventas = (List<ProductoDTO>)request.getAttribute("ventas");
-        String error = "";
         if (persona == null) {
             response.sendRedirect(request.getContextPath());
-        }
-        if (ventas == null){
-             error = "No has vendido nada todavia";
         }
         
     %>
     <body>
         <h1>Bienvenido usuario: <%= persona.getNombre() %></h1>
+ 
         <h3>A continuación se muestran las ventas del cliente : </h3>
-        <p style="color:red"><%= error %></p>
             
         <table>
             <thead>
@@ -46,13 +42,16 @@
                 <tr>
                     <td><%= venta.getIdProducto() %></td>
                     <td><%= venta.getNombreProducto() %></td>
-                    <td><%= venta.getPrecioCompra() %></td>
+                    <td><%= venta.getPrecioCompra() %>€</td>
                 </tr>
                 <%
                     }
                 %>
             </tbody>
         </table>
-            <%  } %>
+        
+            <a href="venta.jsp">Nueva venta</a>
+            
+            
     </body>
 </html>
