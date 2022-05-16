@@ -48,7 +48,7 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         
     }
     
-<<<<<<< HEAD
+
     
     public Producto buscarPorNombre(String nombre){
         
@@ -69,7 +69,6 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     }
     
     
-=======
     public List<Producto> findProductsByColumnInOrder (int columna, int orden) {
         List <Producto> list = null;
         
@@ -109,5 +108,4 @@ public class ProductoFacade extends AbstractFacade<Producto> {
             return list;
         }
     }
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
 }

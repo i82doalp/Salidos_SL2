@@ -36,7 +36,7 @@ public class PersonaService {
         }
     }
     
-<<<<<<< HEAD
+
     
     public Persona DTOaPersona(PersonaDTO personadto){
         
@@ -61,7 +61,7 @@ public class PersonaService {
     }
     
     
-=======
+
      public PersonaDTO registrarUsuario (Persona persona) {
        this.personaFacade.create(persona);
        Persona pers = this.personaFacade.comprobarUsuario(persona.getEmail(), persona.getPassword());
@@ -133,5 +133,5 @@ public class PersonaService {
       
                
     }
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
+
 }

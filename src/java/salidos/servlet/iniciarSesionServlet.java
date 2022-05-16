@@ -48,9 +48,7 @@ public class iniciarSesionServlet extends HttpServlet {
             
             PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
             
-<<<<<<< HEAD
-            
-=======
+
             /*
             List<ProductoDTO> ventas = this.ps.getVentas(persona.getIdPersona());
             
@@ -58,16 +56,14 @@ public class iniciarSesionServlet extends HttpServlet {
                 System.out.println(p.getNombreProducto());
             }
             */
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
+
             
             HttpSession session = request.getSession();
             session.setAttribute("persona", persona);
             
-<<<<<<< HEAD
-            
-=======
+
             //request.setAttribute("ventas", ventas);
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
+
             
             if (persona == null) {
                 String strError = "El usuario o la clave son incorrectos";

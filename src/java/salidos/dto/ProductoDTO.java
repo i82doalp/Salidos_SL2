@@ -18,26 +18,14 @@ public class ProductoDTO {
     private float precioSalida;
     private String descripcion;
     
-<<<<<<< HEAD
-    int idProducto;
-    String nombreProducto;
-    float precioCompra;
-    
     
 
-   
-    
-
-    
-    
-=======
     /**
      * @return the precioSalida
      */
     public float getPrecioSalida() {
         return precioSalida;
     }
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
 
     /**
      * @param precioSalida the precioSalida to set
