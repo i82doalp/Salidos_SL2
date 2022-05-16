@@ -15,10 +15,11 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import salidos.dto.AnalisisDTO;
 
 /**
  *
- * @author gil
+ * @author José Manuel Gil Rodríguez
  */
 @Entity
 @Table(name = "analisis")
@@ -129,6 +130,18 @@ public class Analisis implements Serializable {
     @Override
     public String toString() {
         return "salidos.entity.Analisis[ id=" + id + " ]";
+    }
+    
+    public AnalisisDTO toDTO () {
+        AnalisisDTO dto = new AnalisisDTO();
+        
+        dto.setId(id);
+        dto.setDescripcion(descripcion);
+        dto.setTabla(tabla);
+        dto.setColumna(columna);
+        dto.setOrden(orden);
+        
+        return dto;
     }
     
 }

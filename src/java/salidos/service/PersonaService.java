@@ -6,18 +6,25 @@ package salidos.service;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import salidos.dao.InteresFacade;
 import salidos.dao.PersonaFacade;
 import salidos.dto.PersonaDTO;
+import salidos.entity.Interes;
 import salidos.entity.Persona;
 
 /**
  *
- * @author José Manuel Gil Rodríguez
+ * @author Cristian Alberto Sanchez
  */
 @Stateless
 public class PersonaService {
     
     @EJB PersonaFacade personaFacade;
+    @EJB InteresFacade interesFacade;
     
    
     public PersonaDTO comprobarCredenciales (String email, String pass) {
@@ -29,6 +36,7 @@ public class PersonaService {
         }
     }
     
+<<<<<<< HEAD
     
     public Persona DTOaPersona(PersonaDTO personadto){
         
@@ -53,4 +61,77 @@ public class PersonaService {
     }
     
     
+=======
+     public PersonaDTO registrarUsuario (Persona persona) {
+       this.personaFacade.create(persona);
+       Persona pers = this.personaFacade.comprobarUsuario(persona.getEmail(), persona.getPassword());
+
+        if (pers == null) {
+            return null;
+        } else {
+            return pers.toDTO();
+        }
+    }
+     
+      
+    private List<PersonaDTO> listaPersonaEntityToDTO (List<Persona> lista) {
+        List<PersonaDTO> listaDTO = null;
+        if (lista != null) {
+            listaDTO = new ArrayList<>();
+            for (Persona persona:lista) {
+                listaDTO.add(persona.toDTO());
+            }
+        }
+        return listaDTO;
+    }
+     
+       
+    public List <PersonaDTO> listaPersonas () 
+    {
+       List <Persona> personas= this.personaFacade.findAll();
+       List <PersonaDTO> personasDTO=listaPersonaEntityToDTO(personas);
+       
+       if(personasDTO!=null)
+       {
+           return personasDTO;
+       }
+       else
+       {
+           return null;
+       }
+               
+    }
+
+    
+    public PersonaDTO encontrarPorId(int id) 
+    {
+       
+       PersonaDTO personaDTO= personaFacade.find(id).toDTO();
+       
+       if(personaDTO!=null)
+       {
+           return personaDTO;
+       }
+       else
+       {
+           return null;
+       }
+               
+    }
+    
+    
+    public void deletePersona(int id) 
+    {
+       Persona persona= personaFacade.find(id);
+
+       
+       
+       this.personaFacade.remove(persona);
+       interesFacade.findAll();
+       
+     
+      
+               
+    }
+>>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
 }

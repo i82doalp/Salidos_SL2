@@ -6,6 +6,8 @@ package salidos.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import java.util.List;
 import salidos.entity.Transaccion;
 
 /**
@@ -25,6 +27,34 @@ public class TransaccionFacade extends AbstractFacade<Transaccion> {
 
     public TransaccionFacade() {
         super(Transaccion.class);
+    }
+    
+    public List <Transaccion> findByTipoInOrder(int columna, int orden) {
+        List <Transaccion> list = null;
+        
+        if (columna == 0) {
+            if (orden == 0) {
+                Query q = this.em.createQuery("SELECT t FROM Transaccion t WHERE t.tipo = 'venta' ORDER BY t.precioVenta ASC");
+                list = q.getResultList();
+            } else {
+                Query q =  this.em.createQuery("SELECT t FROM Transaccion t WHERE t.tipo = 'venta' ORDER BY t.precioVenta DESC");
+                list = q.getResultList();
+            }
+        } else {
+            if (orden == 0) {
+                Query q = this.em.createQuery("SELECT t FROM Transaccion t WHERE t.tipo = 'compra' ORDER BY t.precioVenta ASC");
+                list = q.getResultList();
+            } else {
+                Query q =  this.em.createQuery("SELECT t FROM Transaccion t WHERE t.tipo = 'compra' ORDER BY t.precioVenta DESC");
+                list = q.getResultList();
+            }
+        }
+        
+        if (list == null || list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
     }
     
 }

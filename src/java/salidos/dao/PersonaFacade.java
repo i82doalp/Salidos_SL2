@@ -12,7 +12,7 @@ import salidos.entity.Persona;
 
 /**
  *
- * @author José Manuel Gil Rodríguez
+ * @author José Manuel Gil Rodríguez (comprobarUsuario)
  */
 @jakarta.ejb.Stateless
 public class PersonaFacade extends AbstractFacade<Persona> {
@@ -33,6 +33,18 @@ public class PersonaFacade extends AbstractFacade<Persona> {
         Query q = this.em.createQuery("SELECT p FROM Persona p WHERE p.email = :email AND p.password = :password");
         q.setParameter("email", email);
         q.setParameter("password", pass);
+        List<Persona> list = q.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        } else {
+            return list.get(0);
+        }
+    }
+    
+    public Persona findByEmail (String email) {
+        Query q = this.em.createQuery("SELECT p FROM Persona p WHERE p.email = :email");
+        q.setParameter("email", email);
+        
         List<Persona> list = q.getResultList();
         if (list == null || list.isEmpty()) {
             return null;

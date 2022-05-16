@@ -5,29 +5,23 @@
 package salidos.servlet;
 
 import jakarta.ejb.EJB;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import salidos.dto.PersonaDTO;
-import salidos.dto.ProductoDTO;
-import salidos.entity.Producto;
-import salidos.service.PersonaService;
-import salidos.service.ProductoService;
+import salidos.service.AnalisisService;
 
 /**
  *
- * @author José Manuel Gil Rodríguez
+ * @author Jose Manuel Gil Rodríguez
  */
-@WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
-public class iniciarSesionServlet extends HttpServlet {
+@WebServlet(name = "borrarInformeServlet", urlPatterns = {"/borrarInformeServlet"})
+public class borrarInformeServlet extends HttpServlet {
 
-    @EJB PersonaService personaService;
-    
+    @EJB AnalisisService analisisService;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,48 +35,11 @@ public class iniciarSesionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+            String id = request.getParameter("id");
             
+            this.analisisService.borrarAnalisis(Integer.parseInt(id));
             
-            String email = request.getParameter("email");
-            String pass = request.getParameter("pass");
-            
-            PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
-            
-<<<<<<< HEAD
-            
-=======
-            /*
-            List<ProductoDTO> ventas = this.ps.getVentas(persona.getIdPersona());
-            
-            for(ProductoDTO p : ventas){
-                System.out.println(p.getNombreProducto());
-            }
-            */
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("persona", persona);
-            
-<<<<<<< HEAD
-            
-=======
-            //request.setAttribute("ventas", ventas);
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
-            
-            if (persona == null) {
-                String strError = "El usuario o la clave son incorrectos";
-                request.setAttribute("error", strError);
-                request.getRequestDispatcher("").forward(request, response);
-            } else if (persona.getRol().equals("Administrador")) {
-                response.sendRedirect(request.getContextPath() + "/administradorServlet");
-            } else if (persona.getRol().equals("Analista")) {
-                response.sendRedirect(request.getContextPath() + "/analisisServlet");
-            } else if (persona.getRol().equals("Marketing")) {
-                response.sendRedirect(request.getContextPath() + "/marketing.jsp");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/ventasServlet?id="+persona.getIdPersona());
-            }
-        
+            response.sendRedirect(request.getContextPath() +  "/analisisServlet");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

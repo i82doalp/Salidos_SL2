@@ -5,7 +5,6 @@
 package salidos.servlet;
 
 import jakarta.ejb.EJB;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,21 +12,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import salidos.dto.PersonaDTO;
+import salidos.dto.AnalisisDTO;
+import salidos.dto.TransaccionDTO;
 import salidos.dto.ProductoDTO;
-import salidos.entity.Producto;
-import salidos.service.PersonaService;
-import salidos.service.ProductoService;
+import salidos.service.AnalisisService;
 
 /**
  *
  * @author José Manuel Gil Rodríguez
  */
-@WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
-public class iniciarSesionServlet extends HttpServlet {
+@WebServlet(name = "verInformeServlet", urlPatterns = {"/verInformeServlet"})
+public class verInformeServlet extends HttpServlet {
 
-    @EJB PersonaService personaService;
-    
+    @EJB AnalisisService analisisService;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,46 +38,21 @@ public class iniciarSesionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+            String id = request.getParameter("id");
+        
+            AnalisisDTO analisis = this.analisisService.buscarAnalisis(Integer.parseInt(id));
+            request.setAttribute("analisis", analisis);
             
-            
-            String email = request.getParameter("email");
-            String pass = request.getParameter("pass");
-            
-            PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
-            
-<<<<<<< HEAD
-            
-=======
-            /*
-            List<ProductoDTO> ventas = this.ps.getVentas(persona.getIdPersona());
-            
-            for(ProductoDTO p : ventas){
-                System.out.println(p.getNombreProducto());
-            }
-            */
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("persona", persona);
-            
-<<<<<<< HEAD
-            
-=======
-            //request.setAttribute("ventas", ventas);
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
-            
-            if (persona == null) {
-                String strError = "El usuario o la clave son incorrectos";
-                request.setAttribute("error", strError);
-                request.getRequestDispatcher("").forward(request, response);
-            } else if (persona.getRol().equals("Administrador")) {
-                response.sendRedirect(request.getContextPath() + "/administradorServlet");
-            } else if (persona.getRol().equals("Analista")) {
-                response.sendRedirect(request.getContextPath() + "/analisisServlet");
-            } else if (persona.getRol().equals("Marketing")) {
-                response.sendRedirect(request.getContextPath() + "/marketing.jsp");
+            if (analisis.getTabla() == 0) {
+                List <TransaccionDTO> informe = this.analisisService.obtenerProductosVendidosCompradosPersonas(analisis.getColumna(), analisis.getOrden());
+                
+                request.setAttribute("informeTransacciones", informe);
+                request.getRequestDispatcher("verInforme.jsp").forward(request, response);
             } else {
-                response.sendRedirect(request.getContextPath() + "/ventasServlet?id="+persona.getIdPersona());
+                List <ProductoDTO> informe = this.analisisService.obtenerProductosPorColumna(analisis.getColumna(), analisis.getOrden());
+                
+                request.setAttribute("informeProductos", informe);
+                request.getRequestDispatcher("verInforme.jsp").forward(request, response);
             }
         
     }

@@ -5,29 +5,23 @@
 package salidos.servlet;
 
 import jakarta.ejb.EJB;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import salidos.dto.PersonaDTO;
-import salidos.dto.ProductoDTO;
-import salidos.entity.Producto;
-import salidos.service.PersonaService;
-import salidos.service.ProductoService;
+import salidos.service.AnalisisService;
+import salidos.dto.AnalisisDTO;
 
 /**
  *
- * @author José Manuel Gil Rodríguez
+ * @author gil
  */
-@WebServlet(name = "iniciarSesionServlet", urlPatterns = {"/iniciarSesionServlet"})
-public class iniciarSesionServlet extends HttpServlet {
+@WebServlet(name = "editarInformeServlet", urlPatterns = {"/editarInformeServlet"})
+public class editarInformeServlet extends HttpServlet {
 
-    @EJB PersonaService personaService;
-    
+    @EJB AnalisisService analisisService;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,46 +35,28 @@ public class iniciarSesionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+            String id = request.getParameter("id");
+            String tabla = request.getParameter("tabla");
+            String columna = request.getParameter("columna");
+            String orden = request.getParameter("orden");
+            String descripcion = request.getParameter("descripcion");
             
-            
-            String email = request.getParameter("email");
-            String pass = request.getParameter("pass");
-            
-            PersonaDTO persona = this.personaService.comprobarCredenciales(email, pass);
-            
-<<<<<<< HEAD
-            
-=======
-            /*
-            List<ProductoDTO> ventas = this.ps.getVentas(persona.getIdPersona());
-            
-            for(ProductoDTO p : ventas){
-                System.out.println(p.getNombreProducto());
-            }
-            */
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("persona", persona);
-            
-<<<<<<< HEAD
-            
-=======
-            //request.setAttribute("ventas", ventas);
->>>>>>> 59dfcad48bacdc183a6d725c843028ef9a67a16c
-            
-            if (persona == null) {
-                String strError = "El usuario o la clave son incorrectos";
-                request.setAttribute("error", strError);
-                request.getRequestDispatcher("").forward(request, response);
-            } else if (persona.getRol().equals("Administrador")) {
-                response.sendRedirect(request.getContextPath() + "/administradorServlet");
-            } else if (persona.getRol().equals("Analista")) {
-                response.sendRedirect(request.getContextPath() + "/analisisServlet");
-            } else if (persona.getRol().equals("Marketing")) {
-                response.sendRedirect(request.getContextPath() + "/marketing.jsp");
+            if (tabla == null) {
+                AnalisisDTO analisis = this.analisisService.buscarAnalisis(Integer.parseInt(id));
+                
+                String informe;
+                if (analisis.getTabla() == 0)
+                    informe = "Personas";
+                else
+                    informe = "Productos";
+                
+                request.setAttribute("informe", informe);
+                request.setAttribute("analisis", analisis);
+                request.getRequestDispatcher("editarInforme.jsp").forward(request, response);
             } else {
-                response.sendRedirect(request.getContextPath() + "/ventasServlet?id="+persona.getIdPersona());
+                this.analisisService.modificarInforme(Integer.parseInt(id), descripcion, Integer.parseInt(tabla), Integer.parseInt(columna), Integer.parseInt(orden));
+                
+                response.sendRedirect(request.getContextPath() + "/analisisServlet");
             }
         
     }
