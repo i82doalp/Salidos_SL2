@@ -130,4 +130,19 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     }
     
     
+    public int borrarProducto(int id){
+        
+        
+        Query q = this.em.createQuery("Delete from Producto p where p.idProducto = :id ");
+        
+        q.setParameter("id",id);
+        
+        int nfilas = q.executeUpdate();
+        
+        return nfilas;
+        
+    }
+    
+    
+    
 }

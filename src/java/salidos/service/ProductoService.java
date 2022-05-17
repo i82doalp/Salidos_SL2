@@ -88,6 +88,7 @@ public class ProductoService {
         
         producto.setTitulo(nombre);
         producto.setPrecioSalida(precioS);
+        producto.setPrecioCompra(precioS);
         producto.setDescripcion(descripcion);
         producto.setPrecioCompra(0);
         producto.setInteresList(intereses);     
@@ -155,7 +156,9 @@ public class ProductoService {
         
         Producto producto = this.productofacade.find(id);
         
-        this.productofacade.remove(producto);
+        int nfilas = this.productofacade.borrarProducto(producto.getIdProducto());
+        
+        System.out.println(nfilas);
         
     }
     
