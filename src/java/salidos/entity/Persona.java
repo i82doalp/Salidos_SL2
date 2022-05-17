@@ -81,7 +81,7 @@ public class Persona implements Serializable {
     @Basic(optional = false)
     @Column(name = "rol")
     private String rol;
-    @ManyToMany(mappedBy = "personaList")
+    @ManyToMany(cascade = CascadeType.REMOVE, mappedBy = "personaList")
     private List<Interes> interesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
     private List<Transaccion> transaccionList;
