@@ -50,22 +50,38 @@ public class ProductoService {
         }else{
             return this.listaEntityADTO(ventas);
         }
-        
-        
+               
         
     } 
     
+    public List<ProductoDTO> getAllProductos (){
+        
+        
+        List<Producto> productos = this.productofacade.findAll();
+        
+        if(productos == null){
+            return null;
+        }else{
+            return this.listaEntityADTO(productos);
+        }       
+        
+    }
+    
+    
+    
+
     
     
     public void productoModificado(int id,String nombre,float precioS,String descripcion,List<Interes> intereses){
-        
+            
         Producto p = this.productofacade.buscarPorId(id);
         
         rellenarProducto(p,id,nombre,precioS,descripcion,intereses);
         
         this.productofacade.edit(p);
-        
+     
     }
+   
    
     
     public void rellenarProducto(Producto producto,String nombre,float precioS,String descripcion,List<Interes> intereses){

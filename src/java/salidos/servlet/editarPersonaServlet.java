@@ -4,6 +4,7 @@
  */
 package salidos.servlet;
 
+import jakarta.ejb.EJB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import salidos.dto.PersonaDTO;
+import salidos.entity.Interes;
+import salidos.entity.Persona;
+import salidos.service.PersonaService;
 
 /**
  *
@@ -19,6 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "editarPersonaServlet", urlPatterns = {"/editarPersonaServlet"})
 public class editarPersonaServlet extends HttpServlet {
 
+    @EJB PersonaService personaService;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,6 +40,41 @@ public class editarPersonaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String identifier = request.getParameter("id");
+        int id = Integer.parseInt(identifier);
+        String email = request.getParameter("email");
+        String pass = request.getParameter("pass"); 
+        String nombre = request.getParameter("nombre");
+        String apellidos = request.getParameter("apellidos"); 
+        String domicilio = request.getParameter("domicilio"); 
+        String ciudad = request.getParameter("ciudad"); 
+        String fecha_nacimiento = request.getParameter("f_nacimiento"); 
+        String sexo = request.getParameter("sexo"); 
+        char sex =sexo.charAt(0); //Conversion a char
+        String rol = request.getParameter("rol");
+        String[] i = request.getParameterValues("intereses");
+        
+        
+        List<Interes> interes_persona= this.personaService.retornarListaIntereses(i);
+       
+            
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha_nac = null;
+         try 
+         {
+             fecha_nac = formato.parse(fecha_nacimiento);
+         } 
+        catch (ParseException ex) 
+        {
+
+        }
+        this.personaService.modificarPersona(id, email, pass, nombre, 
+                apellidos, domicilio, ciudad, fecha_nac, sex, rol, interes_persona);
+                        response.sendRedirect(request.getContextPath() + "/administradorServlet");
+
+        
+        
         
     }
 
