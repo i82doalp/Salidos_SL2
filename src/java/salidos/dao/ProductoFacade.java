@@ -111,4 +111,23 @@ public class ProductoFacade extends AbstractFacade<Producto> {
             return list;
         }
     }
+    
+    
+    public Producto buscarPorId(int id){
+        
+        Query q = this.em.createNamedQuery("Producto.findByIdProducto");
+        q.setParameter("idProducto",id);
+        
+        
+        List<Producto> producto = q.getResultList();
+        
+        if(producto == null || producto.isEmpty()){
+            return null;
+        }else{
+            return producto.get(0);
+        }
+        
+    }
+    
+    
 }

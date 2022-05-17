@@ -44,4 +44,19 @@ public class InteresFacade extends AbstractFacade<Interes> {
         
     }
     
+    public Interes buscarPorId(int id){
+        
+        Query q = this.em.createNamedQuery("Interes.findByIdInteres");
+        q.setParameter("idInteres",id);
+        
+        List<Interes> interes = q.getResultList();
+        
+        if(interes == null || interes.isEmpty()){
+            return null;
+        }else{
+            return interes.get(0);
+        }
+        
+    }
+    
 }

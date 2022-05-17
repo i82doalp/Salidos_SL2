@@ -4,21 +4,33 @@
  */
 package salidos.servlet;
 
+import jakarta.ejb.EJB;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import salidos.dto.PersonaDTO;
+import salidos.entity.Interes;
+import salidos.entity.Persona;
+import salidos.entity.Producto;
+import salidos.service.InteresService;
+import salidos.service.ProductoService;
 
 /**
  *
- * @author Cristian
+ * @author Pablo
  */
-@WebServlet(name = "editarPersonaServlet", urlPatterns = {"/editarPersonaServlet"})
-public class editarPersonaServlet extends HttpServlet {
+@WebServlet(name = "modificarProductoServlet", urlPatterns = {"/modificarProductoServlet"})
+public class modificarProductoServlet extends HttpServlet {
 
+    @EJB InteresService interesservice;
+    @EJB ProductoService productoservice;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,6 +42,26 @@ public class editarPersonaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        HttpSession sesion = request.getSession();
+        PersonaDTO pers = (PersonaDTO)sesion.getAttribute("persona");
+        
+        int id_objeto = (Integer.parseInt(request.getParameter("id_objeto")));
+        
+        Producto p = this.productoservice.buscarPorId(id_objeto);
+        
+        
+        String nombre = request.getParameter("nombre");
+        float precio_salida = Float.valueOf(request.getParameter("precioS")); 
+        String descripcion = request.getParameter("descripcion");
+        String[] i = request.getParameterValues("interes");
+        List<Interes> intereses = this.interesservice.getIntereses(i);
+       
+       this.productoservice.productoModificado(p.getIdProducto(),nombre,precio_salida,descripcion,intereses);
+       
+       request.getRequestDispatcher("ventasServlet?id="+pers.getIdPersona()).forward(request, response);
+        
         
     }
 

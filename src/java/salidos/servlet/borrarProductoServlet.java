@@ -4,6 +4,8 @@
  */
 package salidos.servlet;
 
+import jakarta.ejb.EJB;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,14 +13,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import salidos.dto.PersonaDTO;
+import salidos.service.ProductoService;
 
 /**
  *
- * @author Cristian
+ * @author Pablo
  */
-@WebServlet(name = "editarPersonaServlet", urlPatterns = {"/editarPersonaServlet"})
-public class editarPersonaServlet extends HttpServlet {
+@WebServlet(name = "borrarProductoServlet", urlPatterns = {"/borrarProductoServlet"})
+public class borrarProductoServlet extends HttpServlet {
 
+    @EJB ProductoService productservice;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,6 +36,18 @@ public class editarPersonaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        HttpSession sesion = request.getSession();
+        
+        PersonaDTO persona = (PersonaDTO)sesion.getAttribute("persona");
+        
+        int id_objeto = Integer.parseInt(request.getParameter("id_objeto"));
+        
+        this.productservice.borrarProducto(id_objeto);
+        
+         response.sendRedirect(request.getContextPath() + "/ventasServlet?id="+persona.getIdPersona());
+        
         
     }
 

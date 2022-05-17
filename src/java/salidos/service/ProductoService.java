@@ -55,6 +55,17 @@ public class ProductoService {
         
     } 
     
+    
+    
+    public void productoModificado(int id,String nombre,float precioS,String descripcion,List<Interes> intereses){
+        
+        Producto p = this.productofacade.buscarPorId(id);
+        
+        rellenarProducto(p,id,nombre,precioS,descripcion,intereses);
+        
+        this.productofacade.edit(p);
+        
+    }
    
     
     public void rellenarProducto(Producto producto,String nombre,float precioS,String descripcion,List<Interes> intereses){
@@ -63,11 +74,36 @@ public class ProductoService {
         producto.setPrecioSalida(precioS);
         producto.setDescripcion(descripcion);
         producto.setPrecioCompra(0);
-        producto.setInteresList(intereses);
-        
-        
+        producto.setInteresList(intereses);     
         
     }
+    
+    public void rellenarProducto(Producto producto,int id, String nombre,float precioS,String descripcion,List<Interes> intereses){
+        
+        List<Interes> nuevos_intereses = new ArrayList<Interes>();
+        
+        if(!nombre.equals(producto.getTitulo())){ 
+            producto.setTitulo(nombre); 
+        }
+        if(precioS != producto.getPrecioSalida()){
+            producto.setPrecioSalida(precioS);
+        }
+        if(!descripcion.equals(producto.getDescripcion())){ 
+            producto.setDescripcion(descripcion);
+        }
+        
+        for(int i = 0;i<producto.getInteresList().size();i++){
+           if(producto.getInteresList().get(i).getIdInteres() != intereses.get(i).getIdInteres()){
+               nuevos_intereses.add(intereses.get(i));
+           }
+        }
+        
+        producto.setPrecioCompra(0);
+        producto.setInteresList(nuevos_intereses);     
+        
+    }
+    
+    
     
     
     public Producto nuevaVenta(String nombre,float precioS,String descripcion,List<Interes> intereses){
@@ -89,6 +125,24 @@ public class ProductoService {
         return p;
         
     }
+    
+    public Producto buscarPorId (int id){
+        
+        Producto p = this.productofacade.find(id);
+        
+        return p;
+        
+    }
+    
+    
+    public void borrarProducto(int id){
+        
+        Producto producto = this.productofacade.find(id);
+        
+        this.productofacade.remove(producto);
+        
+    }
+    
     
     
 }

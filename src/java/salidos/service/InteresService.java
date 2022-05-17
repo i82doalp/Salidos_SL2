@@ -28,7 +28,7 @@ public class InteresService {
         List<Interes> intereses = new ArrayList<Interes>();
         
         for(int f=0;f<i.length;f++){
-            intereses.add(this.interesfacade.find(i[f]));
+            intereses.add(this.interesfacade.buscarPorId(Integer.parseInt(i[f])));
         }
         
         
