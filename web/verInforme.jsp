@@ -74,6 +74,7 @@
                     <%
                         if (analisis.getTabla() == 0) {
                             for (int i = 0; i < transacciones.size(); i++) {
+                                if (transacciones.get(i).getPrecioVenta() != null) {
                     %>
                             <tr>
                                 <td><%= transacciones.get(i).getPrecioVenta() %></td>
@@ -82,6 +83,7 @@
                                 <td><%= transacciones.get(i).getProducto().getTitulo() %></td>
                             </tr>
                     <%
+                                }
                             }
                         } else {
                             for (int i = 0; i < productos.size(); i++) {

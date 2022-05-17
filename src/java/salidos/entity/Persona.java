@@ -81,7 +81,7 @@ public class Persona implements Serializable, Comparable <Persona>{
     @Basic(optional = false)
     @Column(name = "rol")
     private String rol;
-    @ManyToMany(mappedBy = "personaList")
+    @ManyToMany(cascade = CascadeType.REMOVE, mappedBy = "personaList")
     private List<Interes> interesList;
     @OneToMany(orphanRemoval=true, mappedBy = "persona")
     private List<Transaccion> transaccionList;
