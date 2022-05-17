@@ -27,6 +27,9 @@
         
         String busqueda_incorrecta = (String)session.getAttribute("busqueda_incorrecta");
         if (busqueda_incorrecta == null) busqueda_incorrecta = "";
+        
+        String busqueda_incorrecta_pers = (String)session.getAttribute("busqueda_incorrecta_pers");
+        if (busqueda_incorrecta_pers == null) busqueda_incorrecta_pers = "";
     %>
     <body>
         <h1>Bienvenido administrador</h1>
@@ -36,12 +39,85 @@
             Apellidos:  <%= persona.getApellidos() %><br>
             Email:  <%= persona.getEmail() %>
         </p>
-        <td><a href="adminAgregarPersona.jsp">Agregar nuevo usuario</a></td>
+        <td><a href="adminAgregarPersona.jsp">AGREGAR UN NUEVO USUARIO</a></td>
         
         
         
         <h2>Administración de usuarios</h2>
         <p style="color:red;"><%= strError %></p>
+        
+        <%   
+        
+        PersonaDTO busqueda_persona = (PersonaDTO)session.getAttribute("buscado_persona");
+
+        
+        if(busqueda_persona!=null){
+        
+        %>
+        <h3>Resultado de la busqueda</h3>
+        
+         <table border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Rol</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                        <td><%= busqueda_persona.getIdPersona() %></td>
+                        <td><%= busqueda_persona.getEmail() %></td>
+                        <td><%= busqueda_persona.getNombre() %></td>
+                        <td><%= busqueda_persona.getApellidos() %></td>
+                        <td><%= busqueda_persona.getRol() %></td>
+                </tr>
+
+            </tbody>
+        </table><br>
+
+        
+        
+         <%   
+        
+             }
+        else
+        {
+        %>
+         
+        <p style="color:red;"><%= busqueda_incorrecta_pers %></p>
+        
+        
+        <%
+
+        }
+        
+        
+        %>
+        <form method="post" action="busquedaPersonaServlet">
+            
+            <input type="text" name="email_filtro" placeholder="Buscar por email de la persona">
+            <input type="submit" value="BUSCAR">
+        
+        </form><br>
+        
+        <form method="post" action="filtradoPersonaServlet">
+            
+            <select name="filtro">
+                <option disabled="" value="idMenorMayor" selected>Filtrar Personas</option>
+                <option value="idMenorMayor">Id Ascendente</option>
+                <option value="idMayorMenor">Id Descendente</option>
+
+            </select>
+                   
+            
+            <input type="submit" value="APLICAR FILTRO">
+        </form><br>
+        
         <%
             if (listaPersonas != null ) {
         %>
@@ -149,6 +225,21 @@
             
             
         </form><br>
+        
+        <form method="post" action="filtradoProductoServlet">
+            
+            <select name="filtro">
+                <option disabled="" value="idMenorMayor" selected>Filtrar Productos</option>
+                <option value="idMenorMayor">Id Ascendente</option>
+                <option value="idMayorMenor">Id Descendente</option>
+
+            </select>
+                   
+            
+            <input type="submit" value="APLICAR FILTRO">
+        </form><br>
+        
+        
         <table border="1">
             <thead>
                 <tr>

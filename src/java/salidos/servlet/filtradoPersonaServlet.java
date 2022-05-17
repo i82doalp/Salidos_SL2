@@ -13,21 +13,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 import salidos.dto.PersonaDTO;
-import salidos.dto.ProductoDTO;
-import salidos.entity.Producto;
-import salidos.service.ProductoService;
+import salidos.entity.Persona;
+import salidos.service.PersonaService;
 
 /**
  *
  * @author Cristian
  */
-@WebServlet(name = "busquedaProductoServlet", urlPatterns = {"/busquedaProductoServlet"})
-public class busquedaProductoServlet extends HttpServlet {
+@WebServlet(name = "filtradoPersonaServlet", urlPatterns = {"/filtradoPersonaServlet"})
+public class filtradoPersonaServlet extends HttpServlet {
 
-    @EJB ProductoService productoService;
+    @EJB PersonaService personaService;
     /**
-     * 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -38,61 +39,41 @@ public class busquedaProductoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        String nombre = request.getParameter("filtro");
-        String tipo = request.getParameter("tipo");
-        Producto producto_buscado= (Producto)productoService.buscarPorNombre(nombre);
-        HttpSession session = request.getSession();
-        PersonaDTO personadto= (PersonaDTO)session.getAttribute("persona");
-        
-        if (producto_buscado==null)
-        {
-            String busqueda_incorrecta = "Busqueda Incorrecta";
-            session.setAttribute("buscado", null);
-            session.setAttribute("busqueda_incorrecta", busqueda_incorrecta);
-                if(tipo.contentEquals("administrador"))
-                {
-                    response.sendRedirect(request.getContextPath() + "/administradorServlet");
-                }
-                else
-                {
-                request.getRequestDispatcher("ventasServlet?id="+personadto.getIdPersona()).forward(request, response);
-
-                }
-        }
-        else
-        { 
-        
-            if(tipo.contentEquals("administrador"))
+          HttpSession session = request.getSession();
+          List <Persona> listaPersonas = personaService.listaPersonasEntity();
+          List <PersonaDTO> listaPersonasDTO= new ArrayList<PersonaDTO>();
+          String filtrado = request.getParameter("filtro");
+          
+          switch(filtrado)
             {
-                String buscado = request.getParameter("busqueda");
-
-                if(buscado!=null)
-                {
-                    session.setAttribute("buscado", null);
-                    response.sendRedirect(request.getContextPath() + "/administradorServlet");
-                }
-                else
-                {
-                    session.setAttribute("buscado", producto_buscado.toDTO());
-                    response.sendRedirect(request.getContextPath() + "/administradorServlet?busqueda=1");
-
-                }
-
+                case "idMayorMenor" -> {
+                    Collections.sort(listaPersonas, Collections.reverseOrder());
+                    for (int i =0; i<listaPersonas.size();i++)
+                    {
+                        listaPersonasDTO.add(listaPersonas.get(i).toDTO());
+                    }
+                    
+                    session.setAttribute("listaPersonasFiltrada", listaPersonasDTO);
+                    request.getRequestDispatcher("administradorServlet").forward(request, response);
+             }
+                case "idMenorMayor" -> {
+                    Collections.sort(listaPersonas);
+                    for (int i =0; i<listaPersonas.size();i++)
+                    {
+                        listaPersonasDTO.add(listaPersonas.get(i).toDTO());
+                    }
+                    
+                    session.setAttribute("listaPersonasFiltrada", listaPersonasDTO);
+                    request.getRequestDispatcher("administradorServlet").forward(request, response);
+                    
+             }
                 
+                default     ->{
+                
+                    
+                request.getRequestDispatcher("administradorServlet").forward(request, response);
+             }
             }
-            else
-            {
-                session.setAttribute("buscado", producto_buscado.toDTO());
-                request.getRequestDispatcher("ventasServlet?id="+personadto.getIdPersona()).forward(request, response);
-
-            }
-        
-        }
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

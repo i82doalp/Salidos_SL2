@@ -36,6 +36,14 @@ public class PersonaService {
         }
     }
     
+    public PersonaDTO encontrarPorEmail (String email) {
+        Persona persona = this.personaFacade.findByEmail(email);
+        if (persona == null) {
+            return null;
+        } else {
+            return persona.toDTO();
+        }
+    }
 
     
     public Persona DTOaPersona(PersonaDTO personadto){
@@ -101,6 +109,22 @@ public class PersonaService {
        }
                
     }
+    
+    public List <Persona> listaPersonasEntity () 
+    {
+       List <Persona> personas= this.personaFacade.findAll();
+       
+       
+       if(personas!=null)
+       {
+           return personas;
+       }
+       else
+       {
+           return null;
+       }
+               
+    }
 
     
     public PersonaDTO encontrarPorId(int id) 
@@ -126,7 +150,7 @@ public class PersonaService {
 
        
        persona.setInteresList(null);
-       this.personaFacade.remove(persona);
+       this.personaFacade.eliminar(persona);
        
           
     }

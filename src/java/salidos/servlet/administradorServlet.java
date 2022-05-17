@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import salidos.dto.PersonaDTO;
 import salidos.dto.ProductoDTO;
 import salidos.service.PersonaService;
@@ -41,16 +42,40 @@ public class administradorServlet extends HttpServlet {
         
         List <PersonaDTO> listaPersonasDTO = personaService.listaPersonas();
         List <ProductoDTO> listaProductosDTO = productoService.getAllProductos();
-        
-        if (listaPersonasDTO == null || listaPersonasDTO.isEmpty()) {
+        HttpSession session = request.getSession();
+
+        if (listaPersonasDTO == null || listaPersonasDTO.isEmpty() || listaProductosDTO == null || listaProductosDTO.isEmpty()) {
                 String strError = "No hay personas";
                 request.setAttribute("error", strError);
                 request.getRequestDispatcher("administrador.jsp").forward(request, response);
             } else {
                 
-                request.setAttribute("listaProductos", listaProductosDTO);
-                request.setAttribute("listaPersonas", listaPersonasDTO);
-                request.getRequestDispatcher("administrador.jsp").forward(request, response);
+                List <ProductoDTO> listaProductosFiltrada = (List <ProductoDTO>) session.getAttribute("listaProductosFiltrada");
+                List <PersonaDTO> listaPersonasFiltrada = (List <PersonaDTO>) session.getAttribute("listaPersonasFiltrada");
+
+                if(listaProductosFiltrada==null && listaPersonasFiltrada==null ){
+                    request.setAttribute("listaProductos", listaProductosDTO);
+                    request.setAttribute("listaPersonas", listaPersonasDTO);
+                    request.getRequestDispatcher("administrador.jsp").forward(request, response);
+                }
+                else 
+                {
+                   if(listaProductosFiltrada!=null){
+                    request.setAttribute("listaProductos", listaProductosFiltrada);
+                    request.setAttribute("listaPersonas", listaPersonasDTO);
+                    request.getRequestDispatcher("administrador.jsp").forward(request, response);
+                   }
+                   else
+                   {
+                    request.setAttribute("listaPersonas", listaPersonasFiltrada);
+                    request.setAttribute("listaProductos", listaProductosDTO);
+                    request.getRequestDispatcher("administrador.jsp").forward(request, response);
+                   }
+                    
+                }
+                
+                
+                
             }
         
     }

@@ -14,20 +14,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import salidos.dto.PersonaDTO;
-import salidos.dto.ProductoDTO;
-import salidos.entity.Producto;
-import salidos.service.ProductoService;
+import salidos.service.PersonaService;
 
 /**
  *
  * @author Cristian
  */
-@WebServlet(name = "busquedaProductoServlet", urlPatterns = {"/busquedaProductoServlet"})
-public class busquedaProductoServlet extends HttpServlet {
+@WebServlet(name = "busquedaPersonaServlet", urlPatterns = {"/busquedaPersonaServlet"})
+public class busquedaPersonaServlet extends HttpServlet {
 
-    @EJB ProductoService productoService;
+    @EJB PersonaService personaService;
     /**
-     * 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -40,58 +37,37 @@ public class busquedaProductoServlet extends HttpServlet {
             throws ServletException, IOException {
         
         
-        String nombre = request.getParameter("filtro");
-        String tipo = request.getParameter("tipo");
-        Producto producto_buscado= (Producto)productoService.buscarPorNombre(nombre);
+        String email = request.getParameter("email_filtro");
+        PersonaDTO persona_buscada= personaService.encontrarPorEmail(email);
         HttpSession session = request.getSession();
-        PersonaDTO personadto= (PersonaDTO)session.getAttribute("persona");
         
-        if (producto_buscado==null)
+        if (persona_buscada==null)
         {
-            String busqueda_incorrecta = "Busqueda Incorrecta";
-            session.setAttribute("buscado", null);
-            session.setAttribute("busqueda_incorrecta", busqueda_incorrecta);
-                if(tipo.contentEquals("administrador"))
-                {
-                    response.sendRedirect(request.getContextPath() + "/administradorServlet");
-                }
-                else
-                {
-                request.getRequestDispatcher("ventasServlet?id="+personadto.getIdPersona()).forward(request, response);
-
-                }
-        }
-        else
-        { 
-        
-            if(tipo.contentEquals("administrador"))
-            {
-                String buscado = request.getParameter("busqueda");
-
-                if(buscado!=null)
-                {
-                    session.setAttribute("buscado", null);
-                    response.sendRedirect(request.getContextPath() + "/administradorServlet");
-                }
-                else
-                {
-                    session.setAttribute("buscado", producto_buscado.toDTO());
-                    response.sendRedirect(request.getContextPath() + "/administradorServlet?busqueda=1");
-
-                }
-
+            String busqueda_incorrecta_pers = "Busqueda Incorrecta";
+            session.setAttribute("buscado_persona", null);
+            session.setAttribute("busqueda_incorrecta_pers", busqueda_incorrecta_pers);
                 
+            response.sendRedirect(request.getContextPath() + "/administradorServlet");
+                
+                
+        }
+        else{
+        String buscado = request.getParameter("busqueda");
+      
+            if(buscado!=null)
+            {
+                session.setAttribute("buscado_persona", null);
+                response.sendRedirect(request.getContextPath() + "/administradorServlet");
             }
             else
             {
-                session.setAttribute("buscado", producto_buscado.toDTO());
-                request.getRequestDispatcher("ventasServlet?id="+personadto.getIdPersona()).forward(request, response);
-
+                session.setAttribute("buscado_persona", persona_buscada);
+                response.sendRedirect(request.getContextPath() + "/administradorServlet?busqueda=1");
+                
             }
         
+        
         }
-        
-        
         
     }
 

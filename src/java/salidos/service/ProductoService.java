@@ -67,7 +67,18 @@ public class ProductoService {
         
     }
     
-    
+        public List<Producto> getAllProductosEntity (){
+        
+        
+        List<Producto> productos = this.productofacade.findAll();
+        
+        if(productos == null){
+            return null;
+        }else{
+            return productos;
+        }       
+        
+    }
     
 
     

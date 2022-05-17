@@ -37,7 +37,7 @@ import salidos.dto.ProductoDTO;
     @NamedQuery(name = "Producto.findByDescripcion", query = "SELECT p FROM Producto p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "Producto.findByPrecioCompra", query = "SELECT p FROM Producto p WHERE p.precioCompra = :precioCompra"),
     @NamedQuery(name = "Producto.findByFoto", query = "SELECT p FROM Producto p WHERE p.foto = :foto")})
-public class Producto implements Serializable {
+public class Producto implements Serializable, Comparable <Producto>{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -180,6 +180,11 @@ public class Producto implements Serializable {
         dto.setPrecioSalida(precioSalida);
     
         return dto;
+    }
+
+    @Override
+    public int compareTo(Producto producto) {
+        return idProducto.compareTo(producto.getIdProducto());
     }
     
     

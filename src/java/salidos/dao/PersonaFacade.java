@@ -53,4 +53,23 @@ public class PersonaFacade extends AbstractFacade<Persona> {
         }
     }
     
+    public void eliminar (Persona persona) {
+        
+        
+        Query query = em.createQuery(
+        "DELETE FROM Persona-interes p WHERE persona_id_persona = :id");
+        int deleted=-1;
+        deleted = query.setParameter("id", persona.getIdPersona()).executeUpdate();
+        
+        if(deleted!=-1){
+                query = em.createQuery(
+            "DELETE FROM Persona p WHERE id_persona = :id");
+            query.setParameter("id", persona.getIdPersona());
+        
+        
+        
+        
+    }
+    }
+    
 }

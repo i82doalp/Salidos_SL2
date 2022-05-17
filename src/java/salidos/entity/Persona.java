@@ -45,7 +45,7 @@ import salidos.dto.PersonaDTO;
     @NamedQuery(name = "Persona.findBySexo", query = "SELECT p FROM Persona p WHERE p.sexo = :sexo"),
     @NamedQuery(name = "Persona.findByMonedero", query = "SELECT p FROM Persona p WHERE p.monedero = :monedero"),
     @NamedQuery(name = "Persona.findByRol", query = "SELECT p FROM Persona p WHERE p.rol = :rol")})
-public class Persona implements Serializable {
+public class Persona implements Serializable, Comparable <Persona>{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -83,7 +83,7 @@ public class Persona implements Serializable {
     private String rol;
     @ManyToMany(mappedBy = "personaList")
     private List<Interes> interesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    @OneToMany(orphanRemoval=true, mappedBy = "persona")
     private List<Transaccion> transaccionList;
 
     public Persona() {
@@ -251,6 +251,11 @@ public class Persona implements Serializable {
         dto.setRol(rol);
         
         return dto;
+    }
+
+    @Override
+    public int compareTo(Persona o) {
+       return idPersona.compareTo(o.getIdPersona());
     }
        
 }
