@@ -54,11 +54,11 @@
             <label for="precioS">Precio salida : </label>
             <input type="number" placeholder="<%= producto_a_editar.getPrecioSalida() %>" name="precioS" id="precioS"/><br>
             Descripción del producto : <br>
-            <input type="radio" name="descripcion" id="descripcion1" value="bueno" />
+            <input type="radio" name="descripcion" id="descripcion1" value="Bueno" />
             <label for="descripcion1">Bueno</label><br>
-            <input type="radio" name="descripcion" id="descripcion2" value="mediocre" />
+            <input type="radio" name="descripcion" id="descripcion2" value="Mediocre" />
             <label for="descripcion2">Mediocre</label><br>
-            <input type="radio" name="descripcion" id="descripcion3" value="pesimo" />
+            <input type="radio" name="descripcion" id="descripcion3" value="Pesimo" />
             <label for="descripcion3">Pésimo</label><br>
             Seleccionar intereses a los que puede pertenecer el producto : <br>
             <input type="checkbox" name="interes" id="interes1" value="1"/>
