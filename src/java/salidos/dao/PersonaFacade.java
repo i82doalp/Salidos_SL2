@@ -66,7 +66,7 @@ public class PersonaFacade extends AbstractFacade<Persona> {
             "DELETE FROM Persona p WHERE id_persona = :id");
             query.setParameter("id", persona.getIdPersona());
         
-        
+        query.executeUpdate();
         
         
     }

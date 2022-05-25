@@ -147,10 +147,20 @@ public class PersonaService {
     public void deletePersona(int id) 
     {
        Persona persona= personaFacade.find(id);
-
+       List <Interes> lista= persona.getInteresList();
+       if(lista!=null || lista.isEmpty())
+       {
+           for (Interes interes: lista)
+           {
+               interes.getPersonaList().remove(persona);
+               this.interesFacade.edit(interes);
+           }
+       }
        
-       persona.setInteresList(null);
-       this.personaFacade.eliminar(persona);
+       persona.setInteresList(new ArrayList<>());
+       
+      //this.personaFacade.edit(persona);
+       this.personaFacade.remove(persona);
        
           
     }
